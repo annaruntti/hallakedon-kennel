@@ -32,7 +32,11 @@ export default function PostPage({ post, preview }: Props) {
               <meta property="og:image" content={post.articleHeroImage.url} />
             </Head>
             <header className="mb-4">
-              <img src={post.articleHeroImage.url} className="w-full" />
+              <img
+                src={post.articleHeroImage.url}
+                className="w-full"
+                alt={post.articleHeroImage.fileName}
+              />
             </header>
             <div className="container mx-auto">
               <h1>{post.articleTitle}</h1>

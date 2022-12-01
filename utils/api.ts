@@ -3,6 +3,7 @@ export interface Post {
   articleTitle: string;
   articleHeroImage: {
     url: string;
+    fileName: string;
   };
   date: string;
   articleContent: string;
@@ -13,6 +14,7 @@ slug
 articleTitle
 articleHeroImage {
   url
+  fileName
 }
 date
 articleContent

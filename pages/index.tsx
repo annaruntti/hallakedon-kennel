@@ -2,6 +2,7 @@ import { getAllPostsForHome, Post } from "../utils/api";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import ArticleCard from "../components/ArticleCard";
 
 interface Props {
   allPosts: Post[];
@@ -31,22 +32,20 @@ export default function HomePage({ preview, allPosts }: Props) {
               )}
             </Head>
             <header>
-              <div className="container mx-auto pt-6 pb-6">
+              <div className="container mx-auto pt-6 pb-6 px-6">
                 {preview && <p>PREVIEW</p>}
                 <h1>Hallakedon kennelin blogi</h1>
               </div>
             </header>
             {heroPost && (
-              <article className="container mx-auto">
-                <img
-                  src={heroPost.articleHeroImage.url}
-                  className="w-full mb-2"
-                />
-                <h2>{heroPost.articleTitle}</h2>
-                <div>{heroPost.articleContent}</div>
-              </article>
+              <ArticleCard
+                title={heroPost.articleTitle}
+                articleImageUrl={heroPost.articleHeroImage.url}
+                articleImageName={heroPost.articleHeroImage.fileName}
+                content={heroPost.articleContent}
+              />
             )}
-            <div className="container mx-auto pt-6 pb-6">
+            <div className="container mx-auto pt-6 pb-6 px-6">
               More posts:
               {morePosts.length > 0 &&
                 morePosts.map((post) => (
