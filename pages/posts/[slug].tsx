@@ -31,8 +31,13 @@ export default function PostPage({ post, preview }: Props) {
               <title>{post.articleTitle} | Hallakedon kennel</title>
               <meta property="og:image" content={post.articleHeroImage.url} />
             </Head>
-            {preview && <p>PREVIEW</p>}
-            <h1>{post.articleTitle}</h1>
+            <header className="mb-4">
+              <img src={post.articleHeroImage.url} className="w-full" />
+            </header>
+            <div className="container mx-auto">
+              <h1>{post.articleTitle}</h1>
+              <div>{post.articleContent}</div>
+            </div>
           </article>
         </>
       )}
