@@ -30,20 +30,31 @@ export default function HomePage({ preview, allPosts }: Props) {
                 />
               )}
             </Head>
-            {preview && <p>PREVIEW</p>}
-            <h1>Hallakedon kennel</h1>
+            <header>
+              <div className="container mx-auto pt-6 pb-6">
+                {preview && <p>PREVIEW</p>}
+                <h1>Hallakedon kennelin blogi</h1>
+              </div>
+            </header>
             {heroPost && (
-              <article>
+              <article className="container mx-auto">
+                <img
+                  src={heroPost.articleHeroImage.url}
+                  className="w-full mb-2"
+                />
                 <h2>{heroPost.articleTitle}</h2>
+                <div>{heroPost.articleContent}</div>
               </article>
             )}
-            More posts:
-            {morePosts.length > 0 &&
-              morePosts.map((post) => (
-                <article>
-                  <h2>{post.articleTitle}</h2>
-                </article>
-              ))}
+            <div className="container mx-auto pt-6 pb-6">
+              More posts:
+              {morePosts.length > 0 &&
+                morePosts.map((post) => (
+                  <article>
+                    <h2>{post.articleTitle}</h2>
+                  </article>
+                ))}
+            </div>
           </section>
         </>
       )}

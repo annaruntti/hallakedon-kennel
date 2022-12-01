@@ -5,6 +5,7 @@ export interface Post {
     url: string;
   };
   date: string;
+  articleContent: string;
 }
 
 const POST_GRAPHQL_FIELDS = `
@@ -14,6 +15,7 @@ articleHeroImage {
   url
 }
 date
+articleContent
 `;
 
 /*
