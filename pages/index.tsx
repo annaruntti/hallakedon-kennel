@@ -15,6 +15,8 @@ export default function HomePage({ preview, allPosts }: Props) {
   const heroPost = allPosts.length > 0 ? allPosts[0] : undefined;
   const morePosts = allPosts.slice(1);
 
+  const articleUrl = `/posts/${heroPost?.slug}`;
+
   return (
     <div>
       {router.isFallback ? (
@@ -43,15 +45,18 @@ export default function HomePage({ preview, allPosts }: Props) {
                 articleImageUrl={heroPost.articleHeroImage.url}
                 articleImageName={heroPost.articleHeroImage.fileName}
                 content={heroPost.articleContent}
+                articleUrl={articleUrl}
               />
             )}
             <div className="container mx-auto pt-6 pb-6 px-6">
               More posts:
               {morePosts.length > 0 &&
                 morePosts.map((post) => (
-                  <article>
-                    <h2>{post.articleTitle}</h2>
-                  </article>
+                  <a aria-label={heroPost?.articleTitle} href={articleUrl}>
+                    <article>
+                      <h2>{post.articleTitle}</h2>
+                    </article>
+                  </a>
                 ))}
             </div>
           </section>

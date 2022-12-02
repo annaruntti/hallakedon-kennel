@@ -5,6 +5,7 @@ interface Props {
   content?: string;
   articleImageUrl: string;
   articleImageName: string;
+  articleUrl: string;
 }
 
 export default function ArticleCard({
@@ -12,6 +13,7 @@ export default function ArticleCard({
   content,
   articleImageUrl,
   articleImageName,
+  articleUrl,
 }: Props) {
   const router = useRouter();
 
@@ -22,15 +24,17 @@ export default function ArticleCard({
       ) : (
         <>
           <section className="container mx-auto">
-            <article className="p-4 m-4 rounded-md shadow-lg">
-              <img
-                src={articleImageUrl}
-                className="w-full mb-2"
-                alt={articleImageName}
-              />
-              <h2>{title}</h2>
-              <div>{content}</div>
-            </article>
+            <a aria-label={title} href={articleUrl}>
+              <article className="p-4 m-4 rounded-md shadow-lg">
+                <img
+                  src={articleImageUrl}
+                  className="w-full mb-2"
+                  alt={articleImageName}
+                />
+                <h2>{title}</h2>
+                <div>{content}</div>
+              </article>
+            </a>
           </section>
         </>
       )}
