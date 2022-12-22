@@ -23,9 +23,9 @@ export default function ArticleCard({
         <p>Loading…</p>
       ) : (
         <>
-          <section className="container mx-auto">
+          <div>
             <a aria-label={title} href={articleUrl}>
-              <article className="p-4 m-4 rounded-md shadow-lg">
+              <article className="p-4 mb-4 rounded-md shadow-lg">
                 <img
                   src={articleImageUrl}
                   className="w-full mb-2"
@@ -35,7 +35,7 @@ export default function ArticleCard({
                 <div>{content}</div>
               </article>
             </a>
-          </section>
+          </div>
         </>
       )}
     </div>

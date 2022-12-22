@@ -3,6 +3,7 @@ import Head from "next/head";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleCard from "../components/ArticleCard";
+import { Fragment } from "react";
 
 interface Props {
   allPosts: Post[];
@@ -39,25 +40,36 @@ export default function HomePage({ preview, allPosts }: Props) {
                 <h1>Hallakedon kennelin blogi</h1>
               </div>
             </header>
-            {heroPost && (
-              <ArticleCard
-                title={heroPost.articleTitle}
-                articleImageUrl={heroPost.articleHeroImage.url}
-                articleImageName={heroPost.articleHeroImage.fileName}
-                content={heroPost.articleContent}
-                articleUrl={articleUrl}
-              />
-            )}
-            <div className="container mx-auto pt-6 pb-6 px-6">
-              More posts:
-              {morePosts.length > 0 &&
-                morePosts.map((post) => (
-                  <a aria-label={heroPost?.articleTitle} href={articleUrl}>
-                    <article>
-                      <h2>{post.articleTitle}</h2>
-                    </article>
-                  </a>
-                ))}
+            <div className="container mx-auto pt-6 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
+              <main className="col-span-7">
+                {heroPost && (
+                  <ArticleCard
+                    title={heroPost.articleTitle}
+                    articleImageUrl={heroPost.articleHeroImage.url}
+                    articleImageName={heroPost.articleHeroImage.fileName}
+                    content={heroPost.articleContent}
+                    articleUrl={articleUrl}
+                  />
+                )}
+                More posts:
+                {morePosts.length > 0 &&
+                  morePosts.map((post) => (
+                    <a aria-label={heroPost?.articleTitle} href={articleUrl}>
+                      <article>
+                        <h2>{post.articleTitle}</h2>
+                      </article>
+                    </a>
+                  ))}
+              </main>
+              <div className="col-span-3">
+                <h2>Viimeisimmät artikkelit</h2>
+                {morePosts.length > 0 &&
+                  morePosts.map((post) => (
+                    <a aria-label={heroPost?.articleTitle} href={articleUrl}>
+                      <h3>{post.articleTitle}</h3>
+                    </a>
+                  ))}
+              </div>
             </div>
           </section>
         </>
