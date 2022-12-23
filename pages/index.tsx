@@ -1,22 +1,27 @@
-import { getAllPostsForHome, Post } from "../utils/api";
+import { getAllPostsForHome, Post, getAllPages, Page } from "../utils/api";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleCard from "../components/ArticleCard";
-import { Fragment } from "react";
 
 interface Props {
   allPosts: Post[];
   preview: boolean;
+  allPages: Page[];
 }
 
-export default function HomePage({ preview, allPosts }: Props) {
+export default function HomePage({ preview, allPosts, allPages }: Props) {
   const router = useRouter();
 
   const heroPost = allPosts.length > 0 ? allPosts[0] : undefined;
   const morePosts = allPosts.slice(1);
 
+  const pages = allPages;
+
   const articleUrl = `/posts/${heroPost?.slug}`;
+
+  console.log("allPosts", allPosts);
+  console.log("allPages", allPages);
 
   return (
     <div>
@@ -35,6 +40,16 @@ export default function HomePage({ preview, allPosts }: Props) {
               )}
             </Head>
             <header>
+              <nav>
+                <div className="container mx-auto pt-4 pb-4 px-6">
+                  {pages.length > 0 &&
+                    pages.map((page) => (
+                      <a className="pr-4" aria-label={page.pageName} href={""}>
+                        {page?.pageName}
+                      </a>
+                    ))}
+                </div>
+              </nav>
               <div className="container mx-auto pt-6 pb-6 px-6">
                 {preview && <p>PREVIEW</p>}
                 <h1>Hallakedon kennelin blogi</h1>
@@ -82,8 +97,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   preview = false,
 }) => {
   const allPosts = (await getAllPostsForHome(preview)) ?? [];
+  const allPages = await getAllPages();
 
   return {
-    props: { preview, allPosts },
+    props: { preview, allPosts, allPages },
   };
 };

@@ -1,3 +1,31 @@
+/* Pages */
+
+export interface Page {
+  title: string;
+  pageName: string;
+  pageType: string;
+  pageContent: string;
+  ingress: string;
+  heroImage: {
+    url: string;
+    description: string;
+  };
+}
+
+const PAGE_GRAPHQL_FIELDS = `
+    title
+    pageName
+    pageType
+    pageContent
+    ingress
+    heroImage {
+        url
+        description
+    }
+  `;
+
+/* Blog Posts*/
+
 export interface Post {
   slug: string;
   articleTitle: string;
@@ -10,14 +38,14 @@ export interface Post {
 }
 
 const POST_GRAPHQL_FIELDS = `
-slug
-articleTitle
-articleHeroImage {
-  url
-  fileName
-}
-date
-articleContent
+    slug
+    articleTitle
+    articleHeroImage {
+    url
+    fileName
+    }
+    date
+    articleContent
 `;
 
 /*
@@ -62,6 +90,32 @@ async function fetchGraphQL(query: Object, preview = false) {
     }
   ).then((response) => response.json());
 }
+
+/* Pages */
+
+function extractPage(fetchResponse: any) {
+  return fetchResponse?.data?.pageCollection?.items?.[0] as Page;
+}
+
+function extractPageEntries(fetchResponse: any) {
+  return fetchResponse?.data?.pageCollection?.items as Page[];
+}
+
+export async function getAllPages() {
+  const entries = await fetchGraphQL(
+    `query {
+          pageCollection {
+              items {
+                  ${PAGE_GRAPHQL_FIELDS}
+              }
+          }
+      }`
+  );
+
+  return extractPageEntries(entries);
+}
+
+/* Blog posts */
 
 function extractPost(fetchResponse: any) {
   return fetchResponse?.data?.blogPostCollection?.items?.[0] as Post;
