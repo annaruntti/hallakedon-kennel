@@ -1,19 +1,23 @@
-import { getAllPostsForHome, Post } from "../utils/api";
+import { getAllPostsForHome, Post, getAllPages, Page } from "../utils/api";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleCard from "../components/ArticleCard";
+import Navigation from "../components/Navigation";
 
 interface Props {
   allPosts: Post[];
   preview: boolean;
+  allPages: Page[];
 }
 
-export default function BlogPage({ preview, allPosts }: Props) {
+export default function BlogPage({ preview, allPosts, allPages }: Props) {
   const router = useRouter();
 
   const heroPost = allPosts.length > 0 ? allPosts[0] : undefined;
   const morePosts = allPosts.slice(1);
+
+  const pages = allPages;
 
   const articleUrl = `/posts/${heroPost?.slug}`;
 
@@ -33,7 +37,8 @@ export default function BlogPage({ preview, allPosts }: Props) {
                 />
               )}
             </Head>
-            <header>
+            <header className="blog-header">
+              <Navigation allPages={pages} />
               <div className="container mx-auto pt-6 pb-6 px-6">
                 {preview && <p>PREVIEW</p>}
                 <h1>Hallakedon kennelin blogi</h1>
@@ -81,8 +86,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   preview = false,
 }) => {
   const allPosts = (await getAllPostsForHome(preview)) ?? [];
+  const allPages = await getAllPages();
 
   return {
-    props: { preview, allPosts },
+    props: { preview, allPosts, allPages },
   };
 };
