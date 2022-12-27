@@ -3,6 +3,7 @@ import Head from "next/head";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import ArticleCard from "../components/ArticleCard";
+import Navigation from "../components/Navigation";
 
 interface Props {
   allPosts: Post[];
@@ -20,8 +21,9 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
 
   const articleUrl = `/posts/${heroPost?.slug}`;
 
-  console.log("allPosts", allPosts);
-  console.log("allPages", allPages);
+  const headerStyle = {
+    backgroundImage: "url(" + pages[1].heroImage.url + ")",
+  };
 
   return (
     <div>
@@ -39,20 +41,13 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                 />
               )}
             </Head>
-            <header>
-              <nav>
-                <div className="container mx-auto pt-4 pb-4 px-6">
-                  {pages.length > 0 &&
-                    pages.map((page) => (
-                      <a className="pr-4" aria-label={page.pageName} href={""}>
-                        {page?.pageName}
-                      </a>
-                    ))}
-                </div>
-              </nav>
-              <div className="container mx-auto pt-6 pb-6 px-6">
+            <header className="relative" style={headerStyle}>
+              <Navigation allPages={pages} />
+              <div className="header-content container mx-auto pt-8 pb-6 px-6">
                 {preview && <p>PREVIEW</p>}
-                <h1>Hallakedon kennelin blogi</h1>
+                <h1 className="shadow-md header-title">
+                  Hallakedon kennelin blogi
+                </h1>
               </div>
             </header>
             <div className="container mx-auto pt-6 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
