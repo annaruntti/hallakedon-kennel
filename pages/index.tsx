@@ -64,7 +64,7 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                 More posts:
                 {morePosts.length > 0 &&
                   morePosts.map((post) => (
-                    <a aria-label={heroPost?.articleTitle} href={articleUrl}>
+                    <a aria-label={post.articleTitle} href={post.slug}>
                       <article>
                         <h2>{post.articleTitle}</h2>
                       </article>
@@ -75,7 +75,7 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                 <h2>Viimeisimmät artikkelit</h2>
                 {morePosts.length > 0 &&
                   morePosts.map((post) => (
-                    <a aria-label={heroPost?.articleTitle} href={articleUrl}>
+                    <a aria-label={post.articleTitle} href={post.slug}>
                       <h3>{post.articleTitle}</h3>
                     </a>
                   ))}

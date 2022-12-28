@@ -38,7 +38,7 @@ export default function PostPage({ post, preview }: Props) {
                 alt={post.articleHeroImage.fileName}
               />
             </header>
-            <div className="container mx-auto">
+            <div className="container mx-auto article-content shadow-lg">
               <h1>{post.articleTitle}</h1>
               <div>{post.articleContent}</div>
             </div>
