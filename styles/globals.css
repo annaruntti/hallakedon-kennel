@@ -114,6 +114,10 @@ nav {
   height: auto;
 }
 
+.nav-logo {
+  width: 40px;
+}
+
 @media (min-width: 768px) {
   h1 {
     font-size: 2.5rem;
