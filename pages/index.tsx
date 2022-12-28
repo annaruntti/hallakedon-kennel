@@ -45,9 +45,10 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
               <Navigation allPages={pages} />
               <div className="header-content container mx-auto pt-8 pb-6 px-6">
                 {preview && <p>PREVIEW</p>}
-                <h1 className="shadow-md header-title">
-                  Hallakedon kennelin blogi
-                </h1>
+                <div className="shadow-md header-title">
+                  <h1>Hallakedon kennel</h1>
+                  <h2>Suomenlapinkoirien pienimuotoista kasvatusta Oulussa</h2>
+                </div>
               </div>
             </header>
             <div className="container mx-auto pt-6 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
@@ -64,7 +65,10 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                 More posts:
                 {morePosts.length > 0 &&
                   morePosts.map((post) => (
-                    <a aria-label={post.articleTitle} href={post.slug}>
+                    <a
+                      aria-label={post.articleTitle}
+                      href={`/posts/${post.slug}`}
+                    >
                       <article>
                         <h2>{post.articleTitle}</h2>
                       </article>
@@ -75,7 +79,10 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                 <h2>Viimeisimmät artikkelit</h2>
                 {morePosts.length > 0 &&
                   morePosts.map((post) => (
-                    <a aria-label={post.articleTitle} href={post.slug}>
+                    <a
+                      aria-label={post.articleTitle}
+                      href={`/posts/${post.slug}`}
+                    >
                       <h3>{post.articleTitle}</h3>
                     </a>
                   ))}
