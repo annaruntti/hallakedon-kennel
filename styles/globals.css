@@ -110,6 +110,10 @@ nav {
   border-radius: 15px;
 }
 
+.blog-post-header {
+  height: auto;
+}
+
 @media (min-width: 768px) {
   h1 {
     font-size: 2.5rem;
