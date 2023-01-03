@@ -108,7 +108,7 @@ function extractPageEntries(fetchResponse: any) {
 export async function getAllPages() {
   const entries = await fetchGraphQL(
     `query {
-          pageCollection {
+          pageCollection(order: weight_ASC) {
               items {
                   ${PAGE_GRAPHQL_FIELDS}
               }
