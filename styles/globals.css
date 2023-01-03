@@ -116,6 +116,11 @@ nav {
 
 .nav-logo {
   width: 40px;
+  display: inline;
+}
+
+.nav-link-list li {
+  display: inline;
 }
 
 @media (min-width: 768px) {

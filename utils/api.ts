@@ -1,5 +1,7 @@
 /* Pages */
 
+import internal from "stream";
+
 export interface Page {
   title: string;
   pageName: string;
@@ -10,6 +12,7 @@ export interface Page {
     url: string;
     description: string;
   };
+  weight: number;
 }
 
 const PAGE_GRAPHQL_FIELDS = `
@@ -22,6 +25,7 @@ const PAGE_GRAPHQL_FIELDS = `
         url
         description
     }
+    weight
   `;
 
 /* Blog Posts*/
