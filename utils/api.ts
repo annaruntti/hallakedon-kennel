@@ -1,5 +1,6 @@
 /* Pages */
 
+import { Asset } from "contentful";
 import internal from "stream";
 
 export interface Page {
@@ -37,7 +38,8 @@ export interface Post {
     url: string;
     fileName: string;
   };
-  date: string;
+  date: Date;
+  author: Asset | undefined;
   articleContent: string;
 }
 

@@ -25,7 +25,7 @@ export default function ArticleCard({
         <>
           <div>
             <a aria-label={title} href={articleUrl}>
-              <article className="p-4 mb-4 rounded-md shadow-lg">
+              <article className="pb-4 mb-4 border-b-2 border-black">
                 <img
                   src={articleImageUrl}
                   className="w-full mb-2"

@@ -22,8 +22,10 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
   const articleUrl = `/posts/${heroPost?.slug}`;
 
   const headerStyle = {
-    backgroundImage: "url(" + pages[1].heroImage.url + ")",
+    backgroundImage: "url(" + pages[0].heroImage.url + ")",
   };
+
+  console.log("heropost", heroPost);
 
   return (
     <div>
