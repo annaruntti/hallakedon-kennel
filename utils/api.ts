@@ -29,7 +29,7 @@ const PAGE_GRAPHQL_FIELDS = `
     weight
   `;
 
-/* Blog Posts*/
+/* Blog Posts */
 
 export interface Post {
   slug: string;
@@ -78,6 +78,22 @@ articleContent {
   }
 }
 */
+
+/* Assets */
+
+export interface Asset {
+  url: string;
+  description: string;
+  title: string;
+  fileName: string;
+}
+
+const ASSET_GRAPHQL_FIELDS = `
+    url
+    description
+    title
+    fileName
+  `;
 
 async function fetchGraphQL(query: Object, preview = false) {
   return fetch(
@@ -211,4 +227,24 @@ export async function getPostAndMorePosts(slug: string, preview: boolean) {
     post: extractPost(entry),
     morePosts: extractPostEntries(entries),
   };
+}
+
+function extractAssetEntries(fetchResponse: any) {
+  return fetchResponse?.data?.assetCollection?.items as Asset[];
+}
+
+export async function getAllAssets() {
+  const entries = await fetchGraphQL(
+    `query {
+      assetCollection() {
+              items {
+                  ${ASSET_GRAPHQL_FIELDS}
+              }
+          }
+      }`
+  );
+
+  console.log("assets", entries);
+
+  return extractAssetEntries(entries);
 }

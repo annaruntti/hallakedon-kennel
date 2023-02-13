@@ -53,8 +53,8 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                 </div>
               </div>
             </header>
-            <div className="container mx-auto pt-6 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
-              <main className="col-span-7">
+            <div className="container mx-auto pt-8 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
+              <main className="col-span-10 md:col-span-7">
                 {heroPost && (
                   <ArticleCard
                     title={heroPost.articleTitle}
@@ -77,7 +77,7 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                     </a>
                   ))}
               </main>
-              <div className="col-span-3">
+              <div className="col-span-10 md:col-span-3">
                 <h2>Viimeisimmät artikkelit</h2>
                 {morePosts.length > 0 &&
                   morePosts.map((post) => (

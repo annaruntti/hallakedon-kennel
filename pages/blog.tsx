@@ -21,6 +21,11 @@ export default function BlogPage({ preview, allPosts, allPages }: Props) {
 
   const articleUrl = `/posts/${heroPost?.slug}`;
 
+  const headerStyle = {
+    backgroundImage:
+      "https://images.ctfassets.net/hef5a6s5axrs/IGntzJtbAq63s7qzYxATl/84e82466910bff57401a4d5f47f871fe/Koirat_istumassa_tiella__.webp",
+  };
+
   return (
     <div>
       {router.isFallback ? (
@@ -37,14 +42,14 @@ export default function BlogPage({ preview, allPosts, allPages }: Props) {
                 />
               )}
             </Head>
-            <header className="blog-header">
+            <header className="blog-header" style={headerStyle}>
               <Navigation allPages={pages} />
               <div className="container mx-auto pt-6 pb-6 px-6">
                 {preview && <p>PREVIEW</p>}
                 <h1>Hallakedon kennelin blogi</h1>
               </div>
             </header>
-            <div className="container mx-auto pt-6 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
+            <div className="container mx-auto pt-8 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">
               <main className="col-span-7">
                 {heroPost && (
                   <ArticleCard
