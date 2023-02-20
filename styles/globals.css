@@ -64,12 +64,7 @@ header {
 }
 
 .blog-header {
-  padding-top: 3rem;
-  background-position: center center;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  background-size: cover;
-  position: relative;
+  background-position: 82% 25%;
 }
 
 a {
@@ -139,8 +134,7 @@ nav {
   }
 
   .blog-header {
-    height: auto;
-    background-attachment: unset;
+    background-position: center;
   }
 
   .header-content {

@@ -25,8 +25,6 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
     backgroundImage: "url(" + pages[0].heroImage.url + ")",
   };
 
-  console.log("heropost", heroPost);
-
   return (
     <div>
       {router.isFallback ? (

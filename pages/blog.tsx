@@ -21,9 +21,11 @@ export default function BlogPage({ preview, allPosts, allPages }: Props) {
 
   const articleUrl = `/posts/${heroPost?.slug}`;
 
+  const heroimage =
+    "https://images.ctfassets.net/hef5a6s5axrs/IGntzJtbAq63s7qzYxATl/84e82466910bff57401a4d5f47f871fe/Koirat_istumassa_tiella__.webp";
+
   const headerStyle = {
-    backgroundImage:
-      "https://images.ctfassets.net/hef5a6s5axrs/IGntzJtbAq63s7qzYxATl/84e82466910bff57401a4d5f47f871fe/Koirat_istumassa_tiella__.webp",
+    backgroundImage: "url(" + heroimage + ")",
   };
 
   return (
@@ -42,11 +44,12 @@ export default function BlogPage({ preview, allPosts, allPages }: Props) {
                 />
               )}
             </Head>
-            <header className="blog-header" style={headerStyle}>
+            <header className="relative blog-header" style={headerStyle}>
               <Navigation allPages={pages} />
-              <div className="container mx-auto pt-6 pb-6 px-6">
-                {preview && <p>PREVIEW</p>}
-                <h1>Hallakedon kennelin blogi</h1>
+              <div className="header-content container mx-auto pt-8 pb-6 px-6">
+                <div className="shadow-md header-title">
+                  <h1>Hallakedon kennelin blogi</h1>
+                </div>
               </div>
             </header>
             <div className="container mx-auto pt-8 pb-6 px-6 grid grid-cols-1 md:grid-cols-10 gap-8">

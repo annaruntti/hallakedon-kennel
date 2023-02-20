@@ -81,7 +81,7 @@ articleContent {
 
 /* Assets */
 
-export interface Asset {
+export interface Assets {
   url: string;
   description: string;
   title: string;
@@ -230,7 +230,7 @@ export async function getPostAndMorePosts(slug: string, preview: boolean) {
 }
 
 function extractAssetEntries(fetchResponse: any) {
-  return fetchResponse?.data?.assetCollection?.items as Asset[];
+  return fetchResponse?.data?.assetCollection?.items as Assets[];
 }
 
 export async function getAllAssets() {
