@@ -77,7 +77,6 @@ nav {
 }
 
 .header-title {
-  width: fit-content;
   background-color: #fff;
   padding: 1rem 1.25rem;
 }
@@ -92,10 +91,10 @@ nav {
 }
 
 .header-content {
-  padding-top: 8rem;
   position: absolute;
   bottom: 1rem;
   z-index: 1;
+  width: 100%;
 }
 
 .blog-header .header-title h1 {
@@ -124,13 +123,21 @@ nav {
 }
 
 @media (min-width: 768px) {
-  h1 {
-    font-size: 2.5rem;
-    line-height: 50px;
+  .header-title h1 {
+    font-size: 2.25rem;
+    line-height: 40px;
+    padding-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
-  h2 {
-    line-height: 35px;
+  .header-title h2 {
+    line-height: 30px;
+    margin-bottom: 0.75rem;
+  }
+
+  .header-title h3 {
+    font-size: 1rem;
+    line-height: 30px;
   }
 
   header {
@@ -143,8 +150,15 @@ nav {
   }
 
   .header-content {
-    padding-top: 8rem;
-    position: relative;
-    bottom: 0;
+    position: absolute;
+    bottom: 5%;
+  }
+
+  .header-title {
+    width: 40%;
+    background-color: #fff;
+    padding: 1rem 1.25rem;
+    margin-left: auto;
+    margin-top: 30%;
   }
 }

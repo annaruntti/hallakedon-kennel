@@ -43,11 +43,17 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
             </Head>
             <header className="relative" style={headerStyle}>
               <Navigation allPages={pages} />
-              <div className="header-content container mx-auto pt-8 pb-6 px-6">
+              <div className="header-content mx-auto pt-8 pb-6">
                 {preview && <p>PREVIEW</p>}
                 <div className="shadow-md header-title">
                   <h1>Hallakedon kennel</h1>
                   <h2>Suomenlapinkoirien pienimuotoista kasvatusta Oulussa</h2>
+                  <h3 className="hidden md:block">
+                    Hallakedon kennel on pieni kotikenneli, johon pentuja syntyy
+                    harvakseltaan ja vain harkituista yhdistelmistä.
+                    Tavoitteenamme on kasvattaa terveitä, hyväluonteisia ja
+                    harrastuksiin sopivia aktiivisia suomenlapinkoiria.
+                  </h3>
                 </div>
               </div>
             </header>
