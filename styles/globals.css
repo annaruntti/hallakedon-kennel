@@ -72,18 +72,19 @@ a {
 }
 
 nav {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #fff;
   z-index: 999;
 }
 
 .header-title {
   width: fit-content;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 0.5rem 1rem;
+  background-color: #fff;
+  padding: 1rem 1.25rem;
 }
 
 .header-title h1 {
   text-transform: uppercase;
+  font-size: 1.8rem;
 }
 
 .header-title h2 {
@@ -95,6 +96,10 @@ nav {
   position: absolute;
   bottom: 1rem;
   z-index: 1;
+}
+
+.blog-header .header-title h1 {
+  line-height: 36px;
 }
 
 .article-content {
