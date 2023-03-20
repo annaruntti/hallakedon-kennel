@@ -6,6 +6,7 @@ interface Props {
   articleImageUrl: string;
   articleImageName: string;
   articleUrl: string;
+  heroPostDateLocal: string;
 }
 
 export default function ArticleCard({
@@ -14,6 +15,7 @@ export default function ArticleCard({
   articleImageUrl,
   articleImageName,
   articleUrl,
+  heroPostDateLocal,
 }: Props) {
   const router = useRouter();
 
@@ -31,6 +33,7 @@ export default function ArticleCard({
                   className="w-full mb-2"
                   alt={articleImageName}
                 />
+                <span>{heroPostDateLocal}</span>
                 <h2>{title}</h2>
                 <div>{content}</div>
               </article>

@@ -17,6 +17,14 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
   const heroPost = allPosts.length > 0 ? allPosts[0] : undefined;
   const morePosts = allPosts.slice(1);
 
+  const heroPostDate = heroPost ? new Date(heroPost.date) : undefined;
+
+  const heroPostDateLocal = heroPostDate?.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
   const pages = allPages;
 
   const articleUrl = `/posts/${heroPost?.slug}`;
@@ -66,9 +74,10 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                     articleImageName={heroPost.articleHeroImage.fileName}
                     content={heroPost.articleContent}
                     articleUrl={articleUrl}
+                    heroPostDateLocal={heroPostDateLocal}
                   />
                 )}
-                More posts:
+                Lisää artikkeleja:
                 {morePosts.length > 0 &&
                   morePosts.map((post) => (
                     <a
@@ -82,16 +91,30 @@ export default function HomePage({ preview, allPosts, allPages }: Props) {
                   ))}
               </main>
               <div className="col-span-10 md:col-span-3">
-                <h2>Viimeisimmät artikkelit</h2>
-                {morePosts.length > 0 &&
-                  morePosts.map((post) => (
-                    <a
-                      aria-label={post.articleTitle}
-                      href={`/posts/${post.slug}`}
-                    >
-                      <h3>{post.articleTitle}</h3>
-                    </a>
-                  ))}
+                <h2 className="pb-4 mb-4 border-b-2 border-black">
+                  Viimeisimmät artikkelit
+                </h2>
+                <ul>
+                  <li className="pb-4 mb-4 border-b-2 border-black">
+                    {heroPost && (
+                      <a aria-label={heroPost.articleTitle} href={articleUrl}>
+                        <h3>{heroPost.articleTitle}</h3>
+                        <h4>{heroPostDateLocal}</h4>
+                      </a>
+                    )}
+                  </li>
+                  {morePosts.length > 0 &&
+                    morePosts.map((post) => (
+                      <li>
+                        <a
+                          aria-label={post.articleTitle}
+                          href={`/posts/${post.slug}`}
+                        >
+                          <h3>{post.articleTitle}</h3>
+                        </a>
+                      </li>
+                    ))}
+                </ul>
               </div>
             </div>
           </section>
