@@ -1,87 +1,8 @@
-/* Pages */
-
-import { Asset } from "contentful";
-import internal from "stream";
-
-export interface Page {
-  title: string;
-  pageName: string;
-  pageType: string;
-  pageContent: string;
-  ingress: string;
-  heroImage: {
-    url: string;
-    description: string;
-  };
-  weight: number;
-}
-
-const PAGE_GRAPHQL_FIELDS = `
-    title
-    pageName
-    pageType
-    pageContent
-    ingress
-    heroImage {
-        url
-        description
-    }
-    weight
-  `;
-
-/* Blog Posts */
-
-export interface Post {
-  slug: string;
-  articleTitle: string;
-  articleHeroImage: {
-    url: string;
-    fileName: string;
-  };
-  date: Date;
-  author: Asset | undefined;
-  articleContent: string;
-}
-
-const POST_GRAPHQL_FIELDS = `
-    slug
-    articleTitle
-    articleHeroImage {
-    url
-    fileName
-    }
-    date
-    articleContent
-`;
-
-/*
-TODO:
-
-author {
-  name
-  image {
-    url
-  }
-}
-articleContent {
-  json
-  links {
-    assets {
-      block {
-        sys {
-          id
-        }
-        url
-        description
-      }
-    }
-  }
-}
-*/
+import { Document } from "@contentful/rich-text-types";
 
 /* Assets */
 
-export interface Assets {
+export interface Asset {
   url: string;
   description: string;
   title: string;
@@ -89,11 +10,173 @@ export interface Assets {
 }
 
 const ASSET_GRAPHQL_FIELDS = `
-    url
-    description
-    title
-    fileName
-  `;
+  url
+  description
+  title
+  fileName
+`;
+
+/* Pages */
+
+export interface Page {
+  title: string;
+  slug: string;
+  ingress: {
+    json: Document;
+  } | null;
+  content: {
+    json: Document;
+  } | null;
+  heroImage: Asset | null;
+  menuTitle: string;
+  menuWeight: number;
+  showInMenu: boolean;
+  parentPage: {
+    slug: string;
+  } | null;
+}
+
+const PAGE_GRAPHQL_FIELDS = `
+  title
+  slug
+  ingress {
+    json
+  }
+  content {
+    json
+  }
+  heroImage {
+    ${ASSET_GRAPHQL_FIELDS}
+  }
+  menuTitle
+  menuWeight
+  showInMenu
+  parentPage {
+    slug
+  }
+`;
+
+function extractPage(fetchResponse: any) {
+  return fetchResponse?.data?.pageCollection?.items?.[0] as Page;
+}
+
+function extractPages(fetchResponse: any) {
+  return fetchResponse?.data?.pageCollection?.items as Page[];
+}
+
+export async function getPages(preview?: boolean) {
+  const entries = await fetchGraphQL(
+    `query {
+      pageCollection(
+        order: sys_publishedAt_ASC,
+      ) {
+        items {
+          ${PAGE_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+
+  return extractPages(entries);
+}
+
+export async function getPage(slug: string, preview?: boolean) {
+  const entry = await fetchGraphQL(
+    `query {
+      pageCollection(
+        where: { slug: "${slug}" },
+        preview: ${preview ? "true" : "false"},
+        limit: 1
+      ) {
+        items {
+          ${PAGE_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+
+  return extractPage(entry);
+}
+
+/* Blog posts */
+
+export interface BlogPost {
+  title: string;
+  slug: string;
+  date: string;
+  excerpt: {
+    json: Document;
+  } | null;
+  content: {
+    json: Document;
+  } | null;
+  heroImage: Asset | null;
+  // imageGallery: Asset[] | null;
+  // author: Entry | null;
+}
+
+const BLOG_POST_GRAPHQL_FIELDS = `
+  title
+  slug
+  date
+  excerpt {
+    json
+  }
+  content {
+    json
+  }
+  heroImage {
+    ${ASSET_GRAPHQL_FIELDS}
+  }
+`;
+
+function extractBlogPost(fetchResponse: any) {
+  return fetchResponse?.data?.blogPostCollection?.items?.[0] as BlogPost;
+}
+
+function extractBlogPosts(fetchResponse: any) {
+  return fetchResponse?.data?.blogPostCollection?.items as BlogPost[];
+}
+
+export async function getBlogPost(slug: string, preview?: boolean) {
+  const entry = await fetchGraphQL(
+    `query {
+      blogPostCollection(
+        where: { slug: "${slug}" },
+        preview: ${preview ? "true" : "false"},
+        limit: 1
+      ) {
+        items {
+          ${BLOG_POST_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+
+  return extractBlogPost(entry);
+}
+
+export async function getBlogPosts(limit?: number, preview?: boolean) {
+  const entries = await fetchGraphQL(
+    `query {
+      blogPostCollection(
+        order: date_DESC,
+        limit: ${limit ? "null" : limit},
+        preview: ${preview ? "true" : "false"}
+      ) {
+        items {
+          ${BLOG_POST_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+
+  return extractBlogPosts(entries);
+}
 
 async function fetchGraphQL(query: Object, preview = false) {
   return fetch(
@@ -111,140 +194,4 @@ async function fetchGraphQL(query: Object, preview = false) {
       body: JSON.stringify({ query }),
     }
   ).then((response) => response.json());
-}
-
-/* Pages */
-
-function extractPage(fetchResponse: any) {
-  return fetchResponse?.data?.pageCollection?.items?.[0] as Page;
-}
-
-function extractPageEntries(fetchResponse: any) {
-  return fetchResponse?.data?.pageCollection?.items as Page[];
-}
-
-export async function getAllPages() {
-  const entries = await fetchGraphQL(
-    `query {
-          pageCollection(order: weight_ASC) {
-              items {
-                  ${PAGE_GRAPHQL_FIELDS}
-              }
-          }
-      }`
-  );
-
-  return extractPageEntries(entries);
-}
-
-/* Blog posts */
-
-function extractPost(fetchResponse: any) {
-  return fetchResponse?.data?.blogPostCollection?.items?.[0] as Post;
-}
-
-function extractPostEntries(fetchResponse: any) {
-  return fetchResponse?.data?.blogPostCollection?.items as Post[];
-}
-
-export async function getPreviewPostBySlug(slug: string) {
-  console.log("SLUG", slug);
-  const entry = await fetchGraphQL(
-    `query {
-        blogPostCollection(where: { slug: "${slug}" }, preview: true, limit: 1) {
-            items {
-                ${POST_GRAPHQL_FIELDS}
-            }
-        }
-    }`,
-    true
-  );
-
-  console.log("ENTRY", entry);
-
-  return extractPost(entry);
-}
-
-export async function getAllPostsWithSlug() {
-  const entries = await fetchGraphQL(
-    `query {
-        blogPostCollection(where: { slug_exists: true }, order: date_DESC) {
-            items {
-                ${POST_GRAPHQL_FIELDS}
-            }
-        }
-    }`
-  );
-
-  return extractPostEntries(entries);
-}
-
-export async function getAllPostsForHome(preview: boolean) {
-  const entries = await fetchGraphQL(
-    `query {
-        blogPostCollection(order: date_DESC, preview: ${
-          preview ? "true" : "false"
-        }) {
-            items {
-                ${POST_GRAPHQL_FIELDS}
-            }
-        }
-    }`,
-    preview
-  );
-
-  return extractPostEntries(entries);
-}
-
-export async function getPostAndMorePosts(slug: string, preview: boolean) {
-  const entry = await fetchGraphQL(
-    `query {
-        blogPostCollection(where: { slug: "${slug}" }, preview: ${
-      preview ? "true" : "false"
-    }, limit: 1) {
-            items {
-                ${POST_GRAPHQL_FIELDS}
-            }
-        }
-    }`,
-    preview
-  );
-
-  const entries = await fetchGraphQL(
-    `query {
-        blogPostCollection(where: { slug_not_in: "${slug}" }, order: date_DESC, preview: ${
-      preview ? "true" : "false"
-    }, limit: 2) {
-            items {
-                ${POST_GRAPHQL_FIELDS}
-            }
-        }
-    }`,
-    preview
-  );
-
-  return {
-    post: extractPost(entry),
-    morePosts: extractPostEntries(entries),
-  };
-}
-
-function extractAssetEntries(fetchResponse: any) {
-  return fetchResponse?.data?.assetCollection?.items as Assets[];
-}
-
-export async function getAllAssets() {
-  const entries = await fetchGraphQL(
-    `query {
-      assetCollection() {
-              items {
-                  ${ASSET_GRAPHQL_FIELDS}
-              }
-          }
-      }`
-  );
-
-  console.log("assets", entries);
-
-  return extractAssetEntries(entries);
 }

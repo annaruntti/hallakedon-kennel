@@ -1,18 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500&family=Signika+Negative:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
-
-/* @layer base {
-  h1 {
-    @apply text-2xl;
-  }
-  h2 {
-    @apply text-xl;
-  }
-  h3 {
-    @apply text-lg;
-  }
-} */
 @tailwind components;
 @tailwind utilities;
 
@@ -115,10 +103,6 @@ nav {
 
 .nav-logo {
   width: 40px;
-  display: inline;
-}
-
-.nav-link-list li {
   display: inline;
 }
 

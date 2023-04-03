@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getPreviewPostBySlug } from "../../utils/api";
+import { getBlogPost } from "../../utils/api";
 
 export default async function preview(
   req: NextApiRequest,
@@ -16,7 +16,7 @@ export default async function preview(
   }
 
   // Fetch the headless CMS to check if the provided `slug` exists
-  const post = await getPreviewPostBySlug(slug);
+  const post = await getBlogPost(slug, true);
 
   // If the slug doesn't exist prevent preview mode from being enabled
   if (!post) {

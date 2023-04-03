@@ -1,21 +1,26 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import ArticleCard from "../components/ArticleCard";
-import Layout from "../components/Layout";
-import { MenuItem, pagesToMenuItems } from "../components/Navigation";
-import { BlogPost, getBlogPosts, getPage, getPages, Page } from "../utils/api";
-import { formatDate } from "../utils/date";
+import ArticleCard from "../../components/ArticleCard";
+import Layout from "../../components/Layout";
+import { MenuItem, pagesToMenuItems } from "../../components/Navigation";
+import {
+  BlogPost,
+  getBlogPosts,
+  getPage,
+  getPages,
+  Page,
+} from "../../utils/api";
 
 interface Props {
   preview: boolean;
-  homePage: Page;
+  blogPage: Page;
   blogPosts: BlogPost[];
   menuItems: MenuItem[];
 }
 
-export default function HomePage({
+export default function BlogPage({
   preview,
-  homePage,
+  blogPage,
   blogPosts,
   menuItems,
 }: Props) {
@@ -26,17 +31,11 @@ export default function HomePage({
     <Layout
       preview={preview}
       menuItems={menuItems}
-      heroImage={homePage.heroImage}
+      title={blogPage.title}
+      heroImage={blogPage.heroImage}
       headerContent={
         <div className="shadow-md header-title">
-          <h1>Hallakedon kennel</h1>
-          <h2>Suomenlapinkoirien pienimuotoista kasvatusta Oulussa</h2>
-          <p className="hidden md:block">
-            Hallakedon kennel on pieni kotikenneli, johon pentuja syntyy
-            harvakseltaan ja vain harkituista yhdistelmistä. Tavoitteenamme on
-            kasvattaa terveitä, hyväluonteisia ja harrastuksiin sopivia
-            aktiivisia suomenlapinkoiria.
-          </p>
+          <h1>Hallakedon kennelin blogi</h1>
         </div>
       }
       mainContent={<div>{heroPost && <ArticleCard blogPost={heroPost} />}</div>}
@@ -62,12 +61,12 @@ export default function HomePage({
 export const getStaticProps: GetStaticProps<Props> = async ({
   preview = false,
 }) => {
-  const homePage = await getPage("etusivu", preview);
+  const blogPage = await getPage("blogi", preview);
   const blogPosts = await getBlogPosts(4, preview);
   const pages = await getPages(preview);
   const menuItems = pagesToMenuItems(pages);
 
   return {
-    props: { preview, homePage, blogPosts, menuItems },
+    props: { preview, blogPage, blogPosts, menuItems },
   };
 };
