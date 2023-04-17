@@ -3,6 +3,7 @@ import { Page } from "../utils/api";
 import React, { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 
 export interface MenuItem {
   slug: string;
@@ -53,7 +54,14 @@ export default function Navigation({ menuItems }: Props) {
 
   return (
     <nav className="shadow-md fixed top-0 w-full">
-      <div className="container flex mx-auto pt-4 pb-4 px-6">
+      <div className="block md:hidden container flex mx-auto pt-4 pb-4 px-6">
+        <img className="inline w-10 mr-4" src="/logo.png" />
+        <button className="inline-flex ml-auto">
+          <Bars3Icon className="pt-2 h-8 w-8 mr-2" />
+          <span className="pt-2 font-bold">Valikko</span>
+        </button>
+      </div>
+      <div className="hidden md:block container flex mx-auto pt-4 pb-4 px-6">
         <ul className="list-none flex flex-row gap-4 items-center">
           <li>
             <Link href="/">
