@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Page } from "../utils/api";
 import React, { useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { ChevronUpIcon } from "@heroicons/react/24/solid";
 
 export interface MenuItem {
   slug: string;
@@ -39,10 +41,15 @@ export function pagesToMenuItems(pages: Page[]): MenuItem[] {
 
 export default function Navigation({ menuItems }: Props) {
   const [isSubMenuOpen, setOpenSubMenu] = useState(false);
+  const [isSubMenuLevel2Open, setOpenSubLevel2Menu] = useState(false);
 
   const openSubMenu = () => setOpenSubMenu(!isSubMenuOpen);
+  const openSubMenuLevel2 = () => setOpenSubLevel2Menu(!isSubMenuLevel2Open);
 
   console.log("openSubMenu", isSubMenuOpen);
+  console.log("openSubMenu2", isSubMenuLevel2Open);
+
+  console.log("menuItems", menuItems);
 
   return (
     <nav className="shadow-md fixed top-0 w-full">
@@ -61,22 +68,51 @@ export default function Navigation({ menuItems }: Props) {
             menuItems.map((itemLevel1, indexLevel1) => (
               <li key={indexLevel1}>
                 {itemLevel1.subItems.length > 0 ? (
-                  <button onClick={openSubMenu}>{itemLevel1.title}</button>
+                  <button className="inline-flex" onClick={openSubMenu}>
+                    {itemLevel1.title}{" "}
+                    {isSubMenuOpen ? (
+                      <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                    ) : (
+                      <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                    )}
+                  </button>
                 ) : (
                   <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
                 )}
 
                 {itemLevel1.subItems.length > 0 && (
                   <ul
-                    className={isSubMenuOpen ? "submenu-open" : "submenu-close"}
+                    className={
+                      isSubMenuOpen ? "submenu-open-level1" : "submenu-close"
+                    }
                   >
                     {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
                       <li key={indexLevel2}>
-                        <Link href={`/${itemLevel2.slug}`}>
-                          {itemLevel2.title}
-                        </Link>
+                        {itemLevel2.subItems.length > 0 ? (
+                          <button
+                            className="inline-flex"
+                            onClick={openSubMenuLevel2}
+                          >
+                            {itemLevel2.title}
+                            {isSubMenuLevel2Open ? (
+                              <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                            ) : (
+                              <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                            )}
+                          </button>
+                        ) : (
+                          <Link href={`/${itemLevel2.slug}`}>
+                            {itemLevel2.title}
+                          </Link>
+                        )}
                         {itemLevel2.subItems.length > 0 && (
-                          <ul className="list-none">
+                          <ul
+                            className={
+                              isSubMenuLevel2Open
+                                ? "submenu-open-level2"
+                                : "submenu-close"
+                            }
+                          >
                             {itemLevel2.subItems.map(
                               (itemLevel3, indexLevel3) => (
                                 <li key={indexLevel3}>

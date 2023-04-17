@@ -110,8 +110,22 @@ nav {
   display: none;
 }
 
-.submenu-open {
+.submenu-open-level1 {
   display: block;
+  position: fixed;
+  padding: 0.5rem;
+  background-color: #fff;
+}
+
+.submenu-open-level2 {
+  display: block;
+  padding-left: 0.5rem;
+}
+
+.submenu-level1 {
+  position: fixed;
+  background-color: #fff;
+  padding: 0.5rem;
 }
 
 @media (min-width: 768px) {
