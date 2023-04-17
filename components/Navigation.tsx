@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Page } from "../utils/api";
+import React, { useState } from "react";
 
 export interface MenuItem {
   slug: string;
@@ -10,6 +11,7 @@ export interface MenuItem {
 
 interface Props {
   menuItems: MenuItem[];
+  openSubMenu?: Boolean;
 }
 
 export function pagesToMenuItems(pages: Page[]): MenuItem[] {
@@ -36,6 +38,12 @@ export function pagesToMenuItems(pages: Page[]): MenuItem[] {
 }
 
 export default function Navigation({ menuItems }: Props) {
+  const [isSubMenuOpen, setOpenSubMenu] = useState(false);
+
+  const openSubMenu = () => setOpenSubMenu(!isSubMenuOpen);
+
+  console.log("openSubMenu", isSubMenuOpen);
+
   return (
     <nav className="shadow-md fixed top-0 w-full">
       <div className="container flex mx-auto pt-4 pb-4 px-6">
@@ -52,9 +60,16 @@ export default function Navigation({ menuItems }: Props) {
           {menuItems.length > 0 &&
             menuItems.map((itemLevel1, indexLevel1) => (
               <li key={indexLevel1}>
-                <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
+                {itemLevel1.subItems.length > 0 ? (
+                  <button onClick={openSubMenu}>{itemLevel1.title}</button>
+                ) : (
+                  <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
+                )}
+
                 {itemLevel1.subItems.length > 0 && (
-                  <ul className="list-none">
+                  <ul
+                    className={isSubMenuOpen ? "submenu-open" : "submenu-close"}
+                  >
                     {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
                       <li key={indexLevel2}>
                         <Link href={`/${itemLevel2.slug}`}>
