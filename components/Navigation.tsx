@@ -60,7 +60,7 @@ export default function Navigation({ menuItems }: Props) {
   console.log("menuItems", menuItems);
 
   return (
-    <nav className="shadow-md fixed top-0 w-full">
+    <nav className="fixed top-0 w-full">
       <div className="block md:hidden container flex mx-auto pt-4 pb-4 px-6">
         <Link href="/">
           <img className="inline w-10 mr-4" src="/logo.png" />

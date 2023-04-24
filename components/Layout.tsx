@@ -62,7 +62,13 @@ export default function Layout({
           <aside className="col-span-10 md:col-span-3">{asideContent}</aside>
         )}
       </div>
-      {footerContent && <footer>{footerContent}</footer>}
+      {footerContent && (
+        <footer>
+          <div className="container mx-auto pt-8 pb-6 px-6">
+            {footerContent}
+          </div>
+        </footer>
+      )}
     </>
   );
 }
