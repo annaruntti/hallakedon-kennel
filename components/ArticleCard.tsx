@@ -13,19 +13,25 @@ export default function ArticleCard({ blogPost }: Props) {
   return (
     <div>
       <Link href={postUrl} aria-label={blogPost.title}>
-        <article className="pb-4 mb-4 border-b-2 border-black">
-          {blogPost.heroImage && (
-            <img
-              src={blogPost.heroImage.url}
-              className="w-full mb-2"
-              alt={blogPost.heroImage.fileName}
-            />
-          )}
-          <span>{formatDate(blogPost.date)}</span>
-          <h2>{blogPost.title}</h2>
-          {blogPost.excerpt && (
-            <div>{renderRichText(blogPost.excerpt.json)}</div>
-          )}
+        <article className="pb-4 mb-4">
+          <div className="flex-none lg:flex flex-row gap-4">
+            <div className="basis-1/4">
+              {blogPost.heroImage && (
+                <img
+                  src={blogPost.heroImage.url}
+                  className="w-full mb-2 article-card-image"
+                  alt={blogPost.heroImage.fileName}
+                />
+              )}
+            </div>
+            <div className="basis-3/4">
+              <span>{formatDate(blogPost.date)}</span>
+              <h2>{blogPost.title}</h2>
+              {blogPost.excerpt && (
+                <div>{renderRichText(blogPost.excerpt.json)}</div>
+              )}
+            </div>
+          </div>
         </article>
       </Link>
     </div>

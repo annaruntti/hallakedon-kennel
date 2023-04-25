@@ -48,7 +48,7 @@ export default function HomePage({
           <br />
           <h3>Tervetuloa Hallakedon kennelin kotisivuille!</h3>
           <br />
-          <p>
+          <p className="pb-6 mb-6 border-b-2 border-black">
             Olen Anna Tiala (entiseltä sukunimeltäni Runtti) ja kasvatan
             pienimuotoisesti suomenlapinkoiria Oulussa. Aloitin kasvatustyöni
             vuonna 2014, jolloin syntyi kennelini ensimmäinen pentue
@@ -65,6 +65,7 @@ export default function HomePage({
             pentusuunnitelmia, mutta Pentuja-sivulta löydät lisätietoa
             tulevaisuuden pentusuunnitelmista.
           </p>
+          <h3>Käy lukemassa uusin blogipostaus:</h3>
           <br />
           {heroPost && <ArticleCard blogPost={heroPost} />}
         </div>
@@ -86,7 +87,7 @@ export default function HomePage({
       }
       footerContent={
         <div>
-          Hallakedon kennel
+          <b>Hallakedon kennel</b>
           <br />
           Anna Tiala
           <br />

@@ -28,7 +28,9 @@ export default function PagePage({ preview, page, menuItems }: Props) {
       mainContent={
         <div>
           <h1>{page.title}</h1>
+          <br />
           {page.ingress && <div>{renderRichText(page.ingress.json)}</div>}
+          <br />
           {page.content && <div>{renderRichText(page.content.json)}</div>}
         </div>
       }
