@@ -144,6 +144,10 @@ nav {
   padding: 0.25rem;
 }
 
+.mobile-menu-list .submenu-open-level2 li {
+  padding: 0.5rem 0.25rem 0.25rem;
+}
+
 .submenu-close {
   display: none;
 }
@@ -157,6 +161,10 @@ nav {
 .submenu-open-level2 {
   display: block;
   padding-left: 0.5rem;
+}
+
+.submenu-open-level2 li {
+  padding: 0.25rem;
 }
 
 .submenu-level1 {
@@ -228,10 +236,9 @@ footer {
     background-color: #fff;
     border: 1px solid #ccc;
     margin-top: 0.5rem;
-    margin-left: -50px;
     padding: 1.5rem 1.5rem;
-    border-radius: 30px 0;
-    box-shadow: -4px 4px 1px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 0px 30px;
+    box-shadow: 4px 4px 1px 1px rgba(0, 0, 0, 0.5);
   }
 }
 

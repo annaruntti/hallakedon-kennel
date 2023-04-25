@@ -54,16 +54,15 @@ export default function Navigation({ menuItems }: Props) {
   const openSubMenu = () => setOpenSubMenu(!isSubMenuOpen);
   const openSubMenuLevel2 = () => setOpenSubLevel2Menu(!isSubMenuLevel2Open);
 
-  console.log("openSubMenu", isSubMenuOpen);
-  console.log("openSubMenu2", isSubMenuLevel2Open);
-
-  console.log("menuItems", menuItems);
-
   return (
     <nav className="fixed top-0 w-full">
       <div className="block md:hidden container flex mx-auto pt-4 pb-4 px-6">
         <Link href="/">
-          <img className="inline w-10 mr-4" src="/logo.png" />
+          <img
+            alt="Kennelin logo"
+            className="inline w-10 mr-4"
+            src="/logo.png"
+          />
         </Link>
         <button className="inline-flex ml-auto" onClick={openMobileMenu}>
           <Bars3Icon className="pt-2 h-8 w-8 mr-2" />
@@ -152,7 +151,11 @@ export default function Navigation({ menuItems }: Props) {
           <li>
             <Link href="/">
               <span>
-                <img className="inline w-10 mr-4" src="/logo.png" />
+                <img
+                  alt="Kennelin logo"
+                  className="inline w-10 mr-4"
+                  src="/logo.png"
+                />
                 Etusivu
               </span>
             </Link>
