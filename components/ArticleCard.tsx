@@ -13,7 +13,7 @@ export default function ArticleCard({ blogPost }: Props) {
   return (
     <div>
       <Link href={postUrl} aria-label={blogPost.title}>
-        <article className="pb-4 mb-4">
+        <article className="pb-4">
           <div className="flex-none lg:flex flex-row gap-4">
             <div className="basis-1/4">
               {blogPost.heroImage && (
@@ -28,8 +28,11 @@ export default function ArticleCard({ blogPost }: Props) {
               <span>{formatDate(blogPost.date)}</span>
               <h2>{blogPost.title}</h2>
               {blogPost.excerpt && (
-                <div>{renderRichText(blogPost.excerpt.json)}</div>
+                <div className="mb-2">
+                  {renderRichText(blogPost.excerpt.json)}
+                </div>
               )}
+              <span>Lue koko artikkeli</span>
             </div>
           </div>
         </article>

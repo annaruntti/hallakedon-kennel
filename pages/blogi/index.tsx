@@ -38,7 +38,23 @@ export default function BlogPage({
           <h1>Hallakedon kennelin blogi</h1>
         </div>
       }
-      mainContent={<div>{heroPost && <ArticleCard blogPost={heroPost} />}</div>}
+      mainContent={
+        <div>
+          <h2 className="mb-6">Blogi</h2>
+          <ul>
+            <li className="border-b-2 border-black mb-4">
+              {heroPost && <ArticleCard blogPost={heroPost} />}
+            </li>
+            {morePosts.length > 0 &&
+              morePosts.map((post, index) => (
+                <li className="border-b-2 border-black mb-2" key={index}>
+                  {/* <Link href={`/blogi/${post.slug}`}>{post.title}</Link> */}
+                  <ArticleCard blogPost={post} />
+                </li>
+              ))}
+          </ul>
+        </div>
+      }
       asideContent={
         <div>
           <h2 className="pb-4 mb-4 border-b-2 border-black">
@@ -48,10 +64,24 @@ export default function BlogPage({
             {morePosts.length > 0 &&
               morePosts.map((post, index) => (
                 <li key={index}>
-                  <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                  <Link href={`/blogi/${post.slug}`}>{post.title}</Link>
                 </li>
               ))}
           </ul>
+        </div>
+      }
+      footerContent={
+        <div>
+          <b>
+            <span className="mb-4">Hallakedon kennel</span>
+          </b>
+          <br />
+          <span>Anna Tiala</span>
+          <br />
+          <span>Aarnonkuja 25, 90940 Jääli</span>
+          <br />
+          <span>anruntti@gmail.com</span>
+          <br />
         </div>
       }
     />

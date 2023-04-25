@@ -41,13 +41,12 @@ export default function HomePage({
       }
       mainContent={
         <div>
-          <span>
+          <span className="mb-6">
             <b>Etusivu</b>
           </span>
-          <br />
-          <br />
-          <h3>Tervetuloa Hallakedon kennelin kotisivuille!</h3>
-          <br />
+          <h3 className="pt-4 mb-4">
+            Tervetuloa Hallakedon kennelin kotisivuille!
+          </h3>
           <p className="pb-6 mb-6 border-b-2 border-black">
             Olen Anna Tiala (entiseltä sukunimeltäni Runtti) ja kasvatan
             pienimuotoisesti suomenlapinkoiria Oulussa. Aloitin kasvatustyöni
@@ -65,8 +64,7 @@ export default function HomePage({
             pentusuunnitelmia, mutta Pentuja-sivulta löydät lisätietoa
             tulevaisuuden pentusuunnitelmista.
           </p>
-          <h3>Käy lukemassa uusin blogipostaus:</h3>
-          <br />
+          <h3 className="mb-6">Käy lukemassa uusin blogipostaus:</h3>
           {heroPost && <ArticleCard blogPost={heroPost} />}
         </div>
       }
@@ -79,7 +77,7 @@ export default function HomePage({
             {morePosts.length > 0 &&
               morePosts.map((post, index) => (
                 <li key={index}>
-                  <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                  <Link href={`/blogi/${post.slug}`}>{post.title}</Link>
                 </li>
               ))}
           </ul>
@@ -87,14 +85,12 @@ export default function HomePage({
       }
       footerContent={
         <div>
-          <b>Hallakedon kennel</b>
-          <br />
-          Anna Tiala
-          <br />
-          Aarnonkuja 25, 90940 Jääli
-          <br />
-          anruntti@gmail.com
-          <br />
+          <b>
+            <span className="mb-4">Hallakedon kennel</span>
+          </b>
+          <span>Anna Tiala</span>
+          <span>Aarnonkuja 25, 90940 Jääli</span>
+          <span>anruntti@gmail.com</span>
         </div>
       }
     />
