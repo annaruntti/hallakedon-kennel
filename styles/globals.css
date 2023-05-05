@@ -41,6 +41,17 @@ article h2 {
   margin-bottom: 0.5rem;
 }
 
+p {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 1rem;
+}
+
+.ingress p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
 header {
   background-position: center center;
   background-repeat: no-repeat;
@@ -53,6 +64,17 @@ header {
 
 .blog-header {
   background-position: 82% 25%;
+}
+
+main {
+  overflow-wrap: break-word;
+}
+
+main h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 1rem;
 }
 
 a {
