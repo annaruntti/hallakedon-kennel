@@ -10,6 +10,7 @@ import {
   getPages,
   Page,
 } from "../../utils/api";
+import { formatDate } from "../../utils/date";
 
 interface Props {
   preview: boolean;
@@ -57,14 +58,27 @@ export default function BlogPage({
       }
       asideContent={
         <div>
-          <h2 className="pb-4 mb-4 border-b-2 border-black">
+          <h3 className="pb-4 mb-4 border-b-2 border-black">
             Viimeisimmät artikkelit
-          </h2>
+          </h3>
           <ul>
+            {heroPost && (
+              <li className="article-link-list">
+                <Link href={`/blogi/${heroPost.slug}`}>
+                  <span>{heroPost.title}</span>
+                  <br />
+                  <span>{formatDate(heroPost.date)}</span>
+                </Link>
+              </li>
+            )}
             {morePosts.length > 0 &&
               morePosts.map((post, index) => (
-                <li key={index}>
-                  <Link href={`/blogi/${post.slug}`}>{post.title}</Link>
+                <li key={index} className="article-link-list">
+                  <Link href={`/blogi/${post.slug}`}>
+                    <span>{post.title}</span>
+                    <br />
+                    <span>{formatDate(post.date)}</span>
+                  </Link>
                 </li>
               ))}
           </ul>

@@ -22,6 +22,8 @@ export default function HomePage({
   const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
   const morePosts = blogPosts.slice(1);
 
+  console.log("heroPost", heroPost);
+
   return (
     <Layout
       preview={preview}
@@ -74,10 +76,23 @@ export default function HomePage({
             Viimeisimmät artikkelit
           </h3>
           <ul>
+            {heroPost && (
+              <li className="article-link-list">
+                <Link href={`/blogi/${heroPost.slug}`}>
+                  <span>{heroPost.title}</span>
+                  <br />
+                  <span>{formatDate(heroPost.date)}</span>
+                </Link>
+              </li>
+            )}
             {morePosts.length > 0 &&
               morePosts.map((post, index) => (
-                <li key={index}>
-                  <Link href={`/blogi/${post.slug}`}>{post.title}</Link>
+                <li key={index} className="article-link-list">
+                  <Link href={`/blogi/${post.slug}`}>
+                    <span>{post.title}</span>
+                    <br />
+                    <span>{formatDate(post.date)}</span>
+                  </Link>
                 </li>
               ))}
           </ul>

@@ -1,19 +1,30 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import Link from "next/link";
 import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../../components/Navigation";
 import { BlogPost, getBlogPost, getBlogPosts, getPages } from "../../utils/api";
 import { renderRichText } from "../../utils/richText";
+import { formatDate } from "../../utils/date";
 
 interface Props {
   preview: boolean;
   blogPost: BlogPost;
+  blogPosts: BlogPost[];
   menuItems: MenuItem[];
 }
 
-export default function BlogPostPage({ preview, blogPost, menuItems }: Props) {
+export default function BlogPostPage({
+  preview,
+  blogPost,
+  menuItems,
+  blogPosts,
+}: Props) {
   const router = useRouter();
+
+  const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
+  const morePosts = blogPosts.slice(1);
 
   if (!router.isFallback && !blogPost) {
     return <ErrorPage statusCode={404} />;
@@ -33,6 +44,48 @@ export default function BlogPostPage({ preview, blogPost, menuItems }: Props) {
           )}
         </div>
       }
+      asideContent={
+        <div>
+          <h3 className="pb-4 mb-4 border-b-2 border-black">
+            Viimeisimmät artikkelit
+          </h3>
+          <ul>
+            {heroPost && (
+              <li className="article-link-list">
+                <Link href={`/blogi/${heroPost.slug}`}>
+                  <span>{heroPost.title}</span>
+                  <br />
+                  <span>{formatDate(heroPost.date)}</span>
+                </Link>
+              </li>
+            )}
+            {morePosts.length > 0 &&
+              morePosts.map((post, index) => (
+                <li key={index} className="article-link-list">
+                  <Link href={`/blogi/${post.slug}`}>
+                    <span>{post.title}</span>
+                    <br />
+                    <span>{formatDate(post.date)}</span>
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </div>
+      }
+      footerContent={
+        <div>
+          <b>
+            <span className="mb-4">Hallakedon kennel</span>
+          </b>
+          <br />
+          <span>Anna Tiala</span>
+          <br />
+          <span>Aarnonkuja 25, 90940 Jääli</span>
+          <br />
+          <span>anruntti@gmail.com</span>
+          <br />
+        </div>
+      }
     />
   );
 }
@@ -47,6 +100,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 
   const blogPost = await getBlogPost(params.slug, preview);
   const pages = await getPages(preview);
+  const blogPosts = await getBlogPosts(4, preview);
   const menuItems = pagesToMenuItems(pages);
 
   return {
@@ -54,6 +108,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       preview,
       blogPost,
       menuItems,
+      blogPosts,
     },
   };
 };

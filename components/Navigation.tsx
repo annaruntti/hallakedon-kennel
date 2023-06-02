@@ -184,7 +184,7 @@ export default function Navigation({ menuItems }: Props) {
                     }
                   >
                     {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
-                      <li key={indexLevel2}>
+                      <li className="mb-1" key={indexLevel2}>
                         {itemLevel2.subItems.length > 0 ? (
                           <button
                             className="inline-flex"
