@@ -88,8 +88,11 @@ export default function HomePage({
           <b>
             <span className="mb-4">Hallakedon kennel</span>
           </b>
+          <br />
           <span>Anna Tiala</span>
+          <br />
           <span>Aarnonkuja 25, 90940 Jääli</span>
+          <br />
           <span>anruntti@gmail.com</span>
         </div>
       }
