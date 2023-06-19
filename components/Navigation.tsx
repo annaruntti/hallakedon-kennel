@@ -69,83 +69,86 @@ export default function Navigation({ menuItems }: Props) {
           <span className="pt-2 font-bold">Valikko</span>
         </button>
       </div>
-      <div
-        className={
-          isMobileMenuOpen ? "mobile-menu-open-level1" : "mobile-menu-close"
-        }
-      >
-        <ul className="mobile-menu-list">
-          <li>
-            <Link href="/">Etusivu</Link>
-          </li>
-          {menuItems.length > 0 &&
-            menuItems.map((itemLevel1, indexLevel1) => (
-              <li key={indexLevel1}>
-                {itemLevel1.subItems.length > 0 ? (
-                  <button className="inline-flex" onClick={openSubMenu}>
-                    {itemLevel1.title}{" "}
-                    {isSubMenuOpen ? (
-                      <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                    ) : (
-                      <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                    )}
-                  </button>
-                ) : (
-                  <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
-                )}
+      <div className="block md:hidden">
+        <div
+          className={
+            isMobileMenuOpen ? "mobile-menu-open-level1" : "mobile-menu-close"
+          }
+        >
+          <ul className="mobile-menu-list">
+            <li>
+              <Link href="/">Etusivu</Link>
+            </li>
+            {menuItems.length > 0 &&
+              menuItems.map((itemLevel1, indexLevel1) => (
+                <li key={indexLevel1}>
+                  {itemLevel1.subItems.length > 0 ? (
+                    <button className="inline-flex" onClick={openSubMenu}>
+                      {itemLevel1.title}{" "}
+                      {isSubMenuOpen ? (
+                        <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                      ) : (
+                        <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                      )}
+                    </button>
+                  ) : (
+                    <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
+                  )}
 
-                {itemLevel1.subItems.length > 0 && (
-                  <ul
-                    className={
-                      isSubMenuOpen ? "submenu-open-level1" : "submenu-close"
-                    }
-                  >
-                    {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
-                      <li key={indexLevel2}>
-                        {itemLevel2.subItems.length > 0 ? (
-                          <button
-                            className="inline-flex"
-                            onClick={openSubMenuLevel2}
-                          >
-                            {itemLevel2.title}
-                            {isSubMenuLevel2Open ? (
-                              <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                            ) : (
-                              <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                            )}
-                          </button>
-                        ) : (
-                          <Link href={`/${itemLevel2.slug}`}>
-                            {itemLevel2.title}
-                          </Link>
-                        )}
-                        {itemLevel2.subItems.length > 0 && (
-                          <ul
-                            className={
-                              isSubMenuLevel2Open
-                                ? "submenu-open-level2"
-                                : "submenu-close"
-                            }
-                          >
-                            {itemLevel2.subItems.map(
-                              (itemLevel3, indexLevel3) => (
-                                <li key={indexLevel3}>
-                                  <Link href={`/${itemLevel3.slug}`}>
-                                    {itemLevel3.title}
-                                  </Link>
-                                </li>
-                              )
-                            )}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-        </ul>
+                  {itemLevel1.subItems.length > 0 && (
+                    <ul
+                      className={
+                        isSubMenuOpen ? "submenu-open-level1" : "submenu-close"
+                      }
+                    >
+                      {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
+                        <li key={indexLevel2}>
+                          {itemLevel2.subItems.length > 0 ? (
+                            <button
+                              className="inline-flex"
+                              onClick={openSubMenuLevel2}
+                            >
+                              {itemLevel2.title}
+                              {isSubMenuLevel2Open ? (
+                                <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                              ) : (
+                                <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                              )}
+                            </button>
+                          ) : (
+                            <Link href={`/${itemLevel2.slug}`}>
+                              {itemLevel2.title}
+                            </Link>
+                          )}
+                          {itemLevel2.subItems.length > 0 && (
+                            <ul
+                              className={
+                                isSubMenuLevel2Open
+                                  ? "submenu-open-level2"
+                                  : "submenu-close"
+                              }
+                            >
+                              {itemLevel2.subItems.map(
+                                (itemLevel3, indexLevel3) => (
+                                  <li key={indexLevel3}>
+                                    <Link href={`/${itemLevel3.slug}`}>
+                                      {itemLevel3.title}
+                                    </Link>
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
       </div>
+
       <div className="hidden md:block container flex mx-auto pt-4 pb-4 px-6">
         <ul className="list-none flex flex-row gap-4 items-center">
           <li>

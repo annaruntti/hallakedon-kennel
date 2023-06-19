@@ -23,8 +23,17 @@ export default function BlogPostPage({
 }: Props) {
   const router = useRouter();
 
+  // TODO: Fix the problem and remove this workaround
+  if (
+    blogPost === undefined ||
+    menuItems === undefined ||
+    blogPosts === undefined
+  ) {
+    return null;
+  }
+
   const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
-  const morePosts = blogPosts.slice(1);
+  const morePosts = blogPosts.length > 1 ? blogPosts.slice(1) : undefined;
 
   if (!router.isFallback && !blogPost) {
     return <ErrorPage statusCode={404} />;
@@ -59,7 +68,8 @@ export default function BlogPostPage({
                 </Link>
               </li>
             )}
-            {morePosts.length > 0 &&
+            {morePosts &&
+              morePosts.length > 0 &&
               morePosts.map((post, index) => (
                 <li key={index} className="article-link-list">
                   <Link href={`/blogi/${post.slug}`}>
