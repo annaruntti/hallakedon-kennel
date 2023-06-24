@@ -23,6 +23,15 @@ export default function PagePage({
 }: Props) {
   const router = useRouter();
 
+  // TODO: Fix the problem and remove this workaround
+  if (
+    page === undefined ||
+    menuItems === undefined ||
+    blogPosts === undefined
+  ) {
+    return null;
+  }
+
   const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
   const morePosts = blogPosts.slice(1);
 
