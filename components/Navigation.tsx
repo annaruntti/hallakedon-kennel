@@ -41,21 +41,95 @@ export function pagesToMenuItems(pages: Page[]): MenuItem[] {
 }
 
 export default function Navigation({ menuItems }: Props) {
-  const [isMobileMenuOpen, setOpenMobileMenu] = useState(false);
-  const [isMobileMenuLevel2Open, setOpenMobileMenuLevel2] = useState(false);
+  const [isMenunOpen, setIsMenuOpen] = useState(false);
+  const [openMenuItems, setOpenMenuItems] = useState<string[]>([]);
 
-  const openMobileMenu = () => setOpenMobileMenu(!isMobileMenuOpen);
-  const openMobileMenuLevel2 = () =>
-    setOpenMobileMenuLevel2(!isMobileMenuLevel2Open);
+  const toggleMenu = () => setIsMenuOpen(!isMenunOpen);
+  const toggleMenuItem = (menuItem: string) =>
+    setOpenMenuItems(
+      openMenuItems.includes(menuItem)
+        ? openMenuItems.filter((item) => menuItem !== item)
+        : [...openMenuItems, menuItem]
+    );
+  const isMenuItemOpen = (menuItem: string) => openMenuItems.includes(menuItem);
 
-  const [isSubMenuOpen, setOpenSubMenu] = useState(false);
-  const [isSubMenuLevel2Open, setOpenSubLevel2Menu] = useState(false);
+  const menuListItems =
+    menuItems.length > 0 &&
+    menuItems.map((itemLevel1, indexLevel1) => {
+      const menuItemKey = `${indexLevel1}`;
+      const isOpen = isMenuItemOpen(menuItemKey);
 
-  const openSubMenu = () => setOpenSubMenu(!isSubMenuOpen);
-  const openSubMenuLevel2 = () => setOpenSubLevel2Menu(!isSubMenuLevel2Open);
+      return (
+        <li key={indexLevel1}>
+          {itemLevel1.subItems.length > 0 ? (
+            <>
+              <button
+                className="inline-flex"
+                onClick={() => toggleMenuItem(menuItemKey)}
+              >
+                {itemLevel1.title}{" "}
+                {isOpen ? (
+                  <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                ) : (
+                  <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                )}
+              </button>
+              <ul className={isOpen ? "submenu-open-level1" : "submenu-close"}>
+                {itemLevel1.subItems.map((itemLevel2, indexLevel2) => {
+                  const menuItemKey = `${indexLevel1}-${indexLevel2}`;
+                  const isOpen = isMenuItemOpen(menuItemKey);
+
+                  return (
+                    <li key={indexLevel2}>
+                      {itemLevel2.subItems.length > 0 ? (
+                        <>
+                          <button
+                            className="inline-flex"
+                            onClick={() => toggleMenuItem(menuItemKey)}
+                          >
+                            {itemLevel2.title}
+                            {isOpen ? (
+                              <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                            ) : (
+                              <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                            )}
+                          </button>
+                          <ul
+                            className={
+                              isOpen ? "submenu-open-level2" : "submenu-close"
+                            }
+                          >
+                            {itemLevel2.subItems.map(
+                              (itemLevel3, indexLevel3) => (
+                                <li key={indexLevel3}>
+                                  <Link href={`/${itemLevel3.slug}`}>
+                                    {itemLevel3.title}
+                                  </Link>
+                                </li>
+                              )
+                            )}
+                          </ul>
+                        </>
+                      ) : (
+                        <Link href={`/${itemLevel2.slug}`}>
+                          {itemLevel2.title}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          ) : (
+            <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
+          )}
+        </li>
+      );
+    });
 
   return (
     <nav className="fixed top-0 w-full">
+      {/* Mobile menu starts */}
       <div className="block md:hidden container flex mx-auto pt-4 pb-4 px-6">
         <Link href="/">
           <img
@@ -64,7 +138,7 @@ export default function Navigation({ menuItems }: Props) {
             src="/logo.png"
           />
         </Link>
-        <button className="inline-flex ml-auto" onClick={openMobileMenu}>
+        <button className="inline-flex ml-auto" onClick={toggleMenu}>
           <Bars3Icon className="pt-2 h-8 w-8 mr-2" />
           <span className="pt-2 font-bold">Valikko</span>
         </button>
@@ -72,83 +146,19 @@ export default function Navigation({ menuItems }: Props) {
       <div className="block md:hidden">
         <div
           className={
-            isMobileMenuOpen ? "mobile-menu-open-level1" : "mobile-menu-close"
+            isMenunOpen ? "mobile-menu-open-level1" : "mobile-menu-close"
           }
         >
           <ul className="mobile-menu-list">
             <li>
               <Link href="/">Etusivu</Link>
             </li>
-            {menuItems.length > 0 &&
-              menuItems.map((itemLevel1, indexLevel1) => (
-                <li key={indexLevel1}>
-                  {itemLevel1.subItems.length > 0 ? (
-                    <button className="inline-flex" onClick={openSubMenu}>
-                      {itemLevel1.title}{" "}
-                      {isSubMenuOpen ? (
-                        <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                      ) : (
-                        <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                      )}
-                    </button>
-                  ) : (
-                    <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
-                  )}
-
-                  {itemLevel1.subItems.length > 0 && (
-                    <ul
-                      className={
-                        isSubMenuOpen ? "submenu-open-level1" : "submenu-close"
-                      }
-                    >
-                      {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
-                        <li key={indexLevel2}>
-                          {itemLevel2.subItems.length > 0 ? (
-                            <button
-                              className="inline-flex"
-                              onClick={openSubMenuLevel2}
-                            >
-                              {itemLevel2.title}
-                              {isSubMenuLevel2Open ? (
-                                <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                              ) : (
-                                <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                              )}
-                            </button>
-                          ) : (
-                            <Link href={`/${itemLevel2.slug}`}>
-                              {itemLevel2.title}
-                            </Link>
-                          )}
-                          {itemLevel2.subItems.length > 0 && (
-                            <ul
-                              className={
-                                isSubMenuLevel2Open
-                                  ? "submenu-open-level2"
-                                  : "submenu-close"
-                              }
-                            >
-                              {itemLevel2.subItems.map(
-                                (itemLevel3, indexLevel3) => (
-                                  <li key={indexLevel3}>
-                                    <Link href={`/${itemLevel3.slug}`}>
-                                      {itemLevel3.title}
-                                    </Link>
-                                  </li>
-                                )
-                              )}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
+            {menuListItems}
           </ul>
         </div>
       </div>
-
+      {/* Mobile menu ends */}
+      {/* Desktop menu starts */}
       <div className="hidden md:block container flex mx-auto pt-4 pb-4 px-6">
         <ul className="list-none flex flex-row gap-4 items-center">
           <li>
@@ -163,75 +173,10 @@ export default function Navigation({ menuItems }: Props) {
               </span>
             </Link>
           </li>
-
-          {menuItems.length > 0 &&
-            menuItems.map((itemLevel1, indexLevel1) => (
-              <li key={indexLevel1}>
-                {itemLevel1.subItems.length > 0 ? (
-                  <button className="inline-flex" onClick={openSubMenu}>
-                    {itemLevel1.title}{" "}
-                    {isSubMenuOpen ? (
-                      <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                    ) : (
-                      <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                    )}
-                  </button>
-                ) : (
-                  <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
-                )}
-
-                {itemLevel1.subItems.length > 0 && (
-                  <ul
-                    className={
-                      isSubMenuOpen ? "submenu-open-level1" : "submenu-close"
-                    }
-                  >
-                    {itemLevel1.subItems.map((itemLevel2, indexLevel2) => (
-                      <li className="mb-1" key={indexLevel2}>
-                        {itemLevel2.subItems.length > 0 ? (
-                          <button
-                            className="inline-flex"
-                            onClick={openSubMenuLevel2}
-                          >
-                            {itemLevel2.title}
-                            {isSubMenuLevel2Open ? (
-                              <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                            ) : (
-                              <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                            )}
-                          </button>
-                        ) : (
-                          <Link href={`/${itemLevel2.slug}`}>
-                            {itemLevel2.title}
-                          </Link>
-                        )}
-                        {itemLevel2.subItems.length > 0 && (
-                          <ul
-                            className={
-                              isSubMenuLevel2Open
-                                ? "submenu-open-level2"
-                                : "submenu-close"
-                            }
-                          >
-                            {itemLevel2.subItems.map(
-                              (itemLevel3, indexLevel3) => (
-                                <li key={indexLevel3}>
-                                  <Link href={`/${itemLevel3.slug}`}>
-                                    {itemLevel3.title}
-                                  </Link>
-                                </li>
-                              )
-                            )}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
+          {menuListItems}
         </ul>
       </div>
+      {/* Desktop menu ends */}
     </nav>
   );
 }
