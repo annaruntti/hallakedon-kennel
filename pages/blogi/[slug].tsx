@@ -48,9 +48,7 @@ export default function BlogPostPage({
       mainContent={
         <div>
           <h1>{blogPost.title}</h1>
-          {blogPost.content && (
-            <div>{renderRichText(blogPost.content.json)}</div>
-          )}
+          {blogPost.content && <div>{renderRichText(blogPost.content)}</div>}
         </div>
       }
       asideContent={

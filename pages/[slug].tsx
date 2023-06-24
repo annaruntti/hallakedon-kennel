@@ -40,9 +40,9 @@ export default function PagePage({
         <div>
           <h1>{page.title}</h1>
           {page.ingress && (
-            <div className="ingress">{renderRichText(page.ingress.json)}</div>
+            <div className="ingress">{renderRichText(page.ingress)}</div>
           )}
-          {page.content && <div>{renderRichText(page.content.json)}</div>}
+          {page.content && <div>{renderRichText(page.content)}</div>}
         </div>
       }
       asideContent={

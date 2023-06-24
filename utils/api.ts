@@ -1,5 +1,41 @@
 import { Document } from "@contentful/rich-text-types";
 
+export interface ContentWithLinks {
+  json: Document;
+  links: {
+    assets: {
+      block: {
+        sys: {
+          id: string;
+        };
+        url: string;
+        title: string;
+        width: string;
+        height: string;
+        description: string;
+      }[];
+    };
+  };
+}
+
+const CONTENT_WITH_LINKS_FIELDS = `
+json
+links {
+  assets {
+    block {
+      sys {
+        id
+      }
+      url
+      title
+      width
+      height
+      description
+    }
+  }
+}
+`;
+
 /* Assets */
 
 export interface Asset {
@@ -21,12 +57,8 @@ const ASSET_GRAPHQL_FIELDS = `
 export interface Page {
   title: string;
   slug: string;
-  ingress: {
-    json: Document;
-  } | null;
-  content: {
-    json: Document;
-  } | null;
+  ingress: ContentWithLinks | null;
+  content: ContentWithLinks | null;
   heroImage: Asset | null;
   menuTitle: string;
   menuWeight: number;
@@ -40,10 +72,10 @@ const PAGE_GRAPHQL_FIELDS = `
   title
   slug
   ingress {
-    json
+    ${CONTENT_WITH_LINKS_FIELDS}
   }
   content {
-    json
+    ${CONTENT_WITH_LINKS_FIELDS}
   }
   heroImage {
     ${ASSET_GRAPHQL_FIELDS}
@@ -86,8 +118,8 @@ export async function getPage(slug: string, preview?: boolean) {
     `query {
       pageCollection(
         where: { slug: "${slug}" },
+        limit: 1,
         preview: ${preview ? "true" : "false"},
-        limit: 1
       ) {
         items {
           ${PAGE_GRAPHQL_FIELDS}
@@ -106,12 +138,8 @@ export interface BlogPost {
   title: string;
   slug: string;
   date: string;
-  excerpt: {
-    json: Document;
-  } | null;
-  content: {
-    json: Document;
-  } | null;
+  excerpt: ContentWithLinks | null;
+  content: ContentWithLinks | null;
   heroImage: Asset | null;
   // imageGallery: Asset[] | null;
   // author: Entry | null;
@@ -122,10 +150,10 @@ const BLOG_POST_GRAPHQL_FIELDS = `
   slug
   date
   excerpt {
-    json
+    ${CONTENT_WITH_LINKS_FIELDS}
   }
   content {
-    json
+    ${CONTENT_WITH_LINKS_FIELDS}
   }
   heroImage {
     ${ASSET_GRAPHQL_FIELDS}

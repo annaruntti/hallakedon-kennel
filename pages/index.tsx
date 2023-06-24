@@ -22,8 +22,6 @@ export default function HomePage({
   const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
   const morePosts = blogPosts.slice(1);
 
-  console.log("heroPost", heroPost);
-
   return (
     <Layout
       preview={preview}

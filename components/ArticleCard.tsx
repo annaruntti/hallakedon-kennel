@@ -28,9 +28,7 @@ export default function ArticleCard({ blogPost }: Props) {
               <span>{formatDate(blogPost.date)}</span>
               <h2>{blogPost.title}</h2>
               {blogPost.excerpt && (
-                <div className="mb-2">
-                  {renderRichText(blogPost.excerpt.json)}
-                </div>
+                <div className="mb-2">{renderRichText(blogPost.excerpt)}</div>
               )}
               <span>Lue koko artikkeli</span>
             </div>
