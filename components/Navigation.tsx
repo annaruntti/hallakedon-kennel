@@ -167,7 +167,7 @@ export default function Navigation({ menuItems }: Props) {
                 <img
                   alt="Kennelin logo"
                   className="inline w-10 mr-4"
-                  src="/logo.png"
+                  src={`${process.env.BLOG_URL}/logo.png`}
                 />
                 Etusivu
               </span>
