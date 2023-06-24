@@ -60,7 +60,7 @@ const OrderedList = ({ children }: { children: ReactNode }) => (
 
 const ListItem = ({ children }: { children: ReactNode }) => <li>{children}</li>;
 
-const Divider = () => <hr className="border-t-1 border-black mt-2 mb-2" />;
+const Divider = () => <hr className="border-t-1 border-black mt-6 mb-6" />;
 
 const Blockquote = ({ children }: { children: ReactNode }) => (
   <blockquote className="border-l-4 border-black pl-2">{children}</blockquote>

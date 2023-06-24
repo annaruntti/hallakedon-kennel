@@ -81,6 +81,22 @@ a {
   font-family: "Signika Negative", sans-serif;
 }
 
+p a {
+  color: #006661;
+}
+
+.article-link-list a {
+  color: #006661;
+}
+
+.post-date {
+  font-size: 0.75rem;
+}
+
+.read-more {
+  color: #006661;
+}
+
 button {
   font-family: "Signika Negative", sans-serif;
 }

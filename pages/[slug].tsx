@@ -56,7 +56,7 @@ export default function PagePage({
                 <Link href={`/blogi/${heroPost.slug}`}>
                   <span>{heroPost.title}</span>
                   <br />
-                  <span>{formatDate(heroPost.date)}</span>
+                  <span className="post-date">{formatDate(heroPost.date)}</span>
                 </Link>
               </li>
             )}
@@ -66,7 +66,7 @@ export default function PagePage({
                   <Link href={`/blogi/${post.slug}`}>
                     <span>{post.title}</span>
                     <br />
-                    <span>{formatDate(post.date)}</span>
+                    <span className="post-date">{formatDate(post.date)}</span>
                   </Link>
                 </li>
               ))}
