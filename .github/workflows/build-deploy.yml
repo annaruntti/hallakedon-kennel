@@ -25,7 +25,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - uses: actions/configure-pages@v2
+      - uses: actions/configure-pages@v3
         with:
           static_site_generator: next
       - uses: actions/cache@v3
