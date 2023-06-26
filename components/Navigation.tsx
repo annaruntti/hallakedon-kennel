@@ -80,7 +80,7 @@ export default function Navigation({ menuItems }: Props) {
                   const isOpen = isMenuItemOpen(menuItemKey);
 
                   return (
-                    <li key={indexLevel2}>
+                    <li className="mb-1" key={indexLevel2}>
                       {itemLevel2.subItems.length > 0 ? (
                         <>
                           <button
@@ -135,7 +135,7 @@ export default function Navigation({ menuItems }: Props) {
           <img
             alt="Kennelin logo"
             className="inline w-10 mr-4"
-            src="/logo.png"
+            src={`${process.env.BLOG_URL}/logo.png`}
           />
         </Link>
         <button className="inline-flex ml-auto" onClick={toggleMenu}>
