@@ -4,7 +4,14 @@ import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../components/Navigation";
-import { getPage, getPages, Page, BlogPost, getBlogPosts } from "../utils/api";
+import {
+  getPage,
+  getPages,
+  Page,
+  BlogPost,
+  getBlogPosts,
+  getPageSlugs,
+} from "../utils/api";
 import { renderRichText } from "../utils/richText";
 import { formatDate } from "../utils/date";
 
@@ -124,7 +131,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pages = await getPages();
+  const pages = await getPageSlugs();
 
   const filteredPages = pages.filter(
     (page) => !["etusivu", "blogi"].includes(page.slug)

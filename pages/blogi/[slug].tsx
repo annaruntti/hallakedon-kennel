@@ -4,7 +4,13 @@ import ErrorPage from "next/error";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../../components/Navigation";
-import { BlogPost, getBlogPost, getBlogPosts, getPages } from "../../utils/api";
+import {
+  BlogPost,
+  getBlogPost,
+  getBlogPosts,
+  getBlogPostSlugs,
+  getPages,
+} from "../../utils/api";
 import { renderRichText } from "../../utils/richText";
 import { formatDate } from "../../utils/date";
 
@@ -122,7 +128,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const blogPosts = await getBlogPosts();
+  const blogPosts = await getBlogPostSlugs();
 
   return {
     paths: blogPosts?.map(({ slug }) => `/blogi/${slug}`) ?? [],

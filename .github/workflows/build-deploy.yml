@@ -47,7 +47,7 @@ jobs:
           CONTENTFUL_PREVIEW_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_ACCESS_TOKEN }}
           CONTENTFUL_PREVIEW_SECRET: ${{ secrets.CONTENTFUL_PREVIEW_SECRET }}
           CONTENTFUL_REVALIDATE_SECRET: ${{ secrets.CONTENTFUL_REVALIDATE_SECRET }}
-          BLOG_URL: ${{ secrets.BLOG_URL }}
+          BASE_URL: ${{ secrets.BASE_URL }}
 
       - uses: actions/upload-pages-artifact@v1
         with:

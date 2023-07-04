@@ -92,12 +92,12 @@ const Link = ({ href, children }: { href: string; children: ReactNode }) => (
   <a
     href={href}
     target={
-      process.env.BLOG_URL && !href.startsWith(process.env.BLOG_URL)
+      process.env.BASE_URL && !href.startsWith(process.env.BASE_URL)
         ? "_blank"
         : "_self"
     }
     rel={
-      process.env.BLOG_URL && !href.startsWith(process.env.BLOG_URL)
+      process.env.BASE_URL && !href.startsWith(process.env.BASE_URL)
         ? "noopener noreferrer"
         : ""
     }

@@ -113,6 +113,23 @@ export async function getPages(preview?: boolean) {
   return extractPages(entries);
 }
 
+export async function getPageSlugs(preview?: boolean) {
+  const entries = await fetchGraphQL(
+    `query {
+      pageCollection(
+        order: sys_publishedAt_ASC,
+      ) {
+        items {
+          slug
+        }
+      }
+    }`,
+    preview
+  );
+
+  return extractPages(entries);
+}
+
 export async function getPage(slug: string, preview?: boolean) {
   const entry = await fetchGraphQL(
     `query {
@@ -187,16 +204,34 @@ export async function getBlogPost(slug: string, preview?: boolean) {
   return extractBlogPost(entry);
 }
 
-export async function getBlogPosts(limit?: number, preview?: boolean) {
+export async function getBlogPosts(limit: number, preview?: boolean) {
   const entries = await fetchGraphQL(
     `query {
       blogPostCollection(
         order: date_DESC,
-        limit: ${limit ? "null" : limit},
+        limit: ${limit},
         preview: ${preview ? "true" : "false"}
       ) {
         items {
           ${BLOG_POST_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+
+  return extractBlogPosts(entries);
+}
+
+export async function getBlogPostSlugs(preview?: boolean) {
+  const entries = await fetchGraphQL(
+    `query {
+      blogPostCollection(
+        order: date_DESC,
+        preview: ${preview ? "true" : "false"}
+      ) {
+        items {
+          slug
         }
       }
     }`,
