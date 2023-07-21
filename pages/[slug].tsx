@@ -52,9 +52,14 @@ export default function PagePage({
       menuItems={menuItems}
       title={page.title}
       heroImage={page.heroImage}
+      headerContent={
+        <div className="shadow-md header-title">
+          <h1>{page.title}</h1>
+        </div>
+      }
       mainContent={
         <div>
-          <h1>{page.title}</h1>
+          <h2>{page.title}</h2>
           {page.ingress && (
             <div className="ingress">{renderRichText(page.ingress)}</div>
           )}

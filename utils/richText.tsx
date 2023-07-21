@@ -107,7 +107,7 @@ const Link = ({ href, children }: { href: string; children: ReactNode }) => (
 );
 
 const Image = ({ src, alt }: { src: string; alt: string }) => {
-  return <img className="m-2" src={src} alt={alt} />;
+  return <img className="pt-4 mb-4" src={src} alt={alt} />;
 };
 
 const renderOptions = (contentWithLinks: ContentWithLinks): Options => {

@@ -51,9 +51,14 @@ export default function BlogPostPage({
       menuItems={menuItems}
       title={blogPost.title}
       heroImage={blogPost.heroImage}
+      headerContent={
+        <div className="shadow-md header-title">
+          <h1>{blogPost.title}</h1>
+        </div>
+      }
       mainContent={
         <div>
-          <h1>{blogPost.title}</h1>
+          <h2>{blogPost.title}</h2>
           {blogPost.content && <div>{renderRichText(blogPost.content)}</div>}
         </div>
       }

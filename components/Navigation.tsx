@@ -102,7 +102,10 @@ export default function Navigation({ menuItems }: Props) {
                             {itemLevel2.subItems.map(
                               (itemLevel3, indexLevel3) => (
                                 <li key={indexLevel3}>
-                                  <Link href={`/${itemLevel3.slug}`}>
+                                  <Link
+                                    href={`/${itemLevel3.slug}`}
+                                    onClick={toggleMenu}
+                                  >
                                     {itemLevel3.title}
                                   </Link>
                                 </li>
@@ -111,7 +114,7 @@ export default function Navigation({ menuItems }: Props) {
                           </ul>
                         </>
                       ) : (
-                        <Link href={`/${itemLevel2.slug}`}>
+                        <Link href={`/${itemLevel2.slug}`} onClick={toggleMenu}>
                           {itemLevel2.title}
                         </Link>
                       )}
@@ -121,7 +124,9 @@ export default function Navigation({ menuItems }: Props) {
               </ul>
             </>
           ) : (
-            <Link href={`/${itemLevel1.slug}`}>{itemLevel1.title}</Link>
+            <Link href={`/${itemLevel1.slug}`} onClick={toggleMenu}>
+              {itemLevel1.title}
+            </Link>
           )}
         </li>
       );
@@ -151,7 +156,9 @@ export default function Navigation({ menuItems }: Props) {
         >
           <ul className="mobile-menu-list">
             <li>
-              <Link href="/">Etusivu</Link>
+              <Link href="/" onClick={toggleMenu}>
+                Etusivu
+              </Link>
             </li>
             {menuListItems}
           </ul>
