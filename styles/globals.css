@@ -59,6 +59,7 @@ header {
   background-attachment: fixed;
   background-size: cover;
   background-position: top;
+  width: 100%;
 }
 
 .blog-header {
