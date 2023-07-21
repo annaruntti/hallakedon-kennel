@@ -56,7 +56,6 @@ header {
   background-repeat: no-repeat;
   position: relative;
   height: 100vh;
-  background-attachment: fixed;
   background-size: cover;
   background-position: top;
   width: 100%;
@@ -226,6 +225,7 @@ footer {
 @media (min-width: 768px) {
   header {
     height: 100vh;
+    background-attachment: fixed;
   }
 
   .header-title h1 {
