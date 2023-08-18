@@ -80,7 +80,7 @@ export default function Navigation({ menuItems }: Props) {
                   const isOpen = isMenuItemOpen(menuItemKey);
 
                   return (
-                    <li className="mb-1" key={indexLevel2}>
+                    <li className="mb-1 md:mb-2" key={indexLevel2}>
                       {itemLevel2.subItems.length > 0 ? (
                         <>
                           <button
