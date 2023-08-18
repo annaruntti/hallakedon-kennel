@@ -48,21 +48,20 @@ export default function HomePage({
             Tervetuloa Hallakedon kennelin kotisivuille!
           </h3>
           <p className="pb-6 mb-6 border-b-2 border-black">
-            Olen Anna Tiala (entiseltä sukunimeltäni Runtti) ja kasvatan
-            pienimuotoisesti suomenlapinkoiria Oulussa. Aloitin kasvatustyöni
-            vuonna 2014, jolloin syntyi kennelini ensimmäinen pentue
-            yhdistelmästä Kultalangan Wenus ja Fihtolas Ekoteko. Toinen pentue
-            syntyi elokuussa 2016 yhdistelmästä Kultalangan Wenus ja Kuuhvitar
-            Gielas. Kolmas pentue on syntyi koiralleni Hallakedon Lumimarjalle
+            Olen Anna Tiala (omaa sukua Runtti) ja kasvatan pienimuotoisesti
+            suomenlapinkoiria Oulussa. Aloitin kasvatustyöni vuonna 2014,
+            jolloin syntyi kennelini ensimmäinen pentue yhdistelmästä
+            Kultalangan Wenus ja Fihtolas Ekoteko. Toinen pentue syntyi
+            elokuussa 2016 yhdistelmästä Kultalangan Wenus ja Kuuhvitar Gielas.
+            Kolmas pentue on syntyi koiralleni Hallakedon Lumimarjalle
             helmikuussa 2018. Tämän jälkeen meille on syntynyt vielä kaksi
             pentuetta ja kuudes pentue on suunnitteilla mahdollisesti keväälle
             2024. Asumme mieheni, kahden lapsemme ja koiriemme kanssa Oulun
             Jäälissä omakotitalossa ja koirat elävät sisällä talossa ihmisten
             kanssa lemmikkeinä arkemme keskellä. Tavoitteeni on kasvattaa
             terveitä, hyväluonteisia ja kauniita, harrastuksiin soveltuvia
-            suomenlapinkoiria. Juuri nyt meillä ei ole aivan ajankohtaisia
-            pentusuunnitelmia, mutta Pentuja-sivulta löydät lisätietoa
-            tulevaisuuden pentusuunnitelmista.
+            suomenlapinkoiria. Tulevista pentusuunnitelmistamme voit lukea
+            Pentuja-sivulta.
           </p>
           <h3 className="mb-6">Käy lukemassa uusin blogipostaus:</h3>
           {heroPost && <ArticleCard blogPost={heroPost} />}

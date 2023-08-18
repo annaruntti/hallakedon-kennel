@@ -222,6 +222,10 @@ footer {
   margin-bottom: 0.5rem;
 }
 
+.img-description {
+  font-style: italic;
+}
+
 @media (min-width: 768px) {
   header {
     height: 100vh;

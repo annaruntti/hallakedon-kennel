@@ -59,6 +59,9 @@ export default function BlogPostPage({
       mainContent={
         <div>
           <h2>{blogPost.title}</h2>
+          {blogPost.excerpt && (
+            <div className="ingress">{renderRichText(blogPost.excerpt)}</div>
+          )}
           {blogPost.content && <div>{renderRichText(blogPost.content)}</div>}
         </div>
       }
