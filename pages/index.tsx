@@ -72,7 +72,7 @@ export default function HomePage({
           <h3 className="pb-4 mb-4 border-b-2 border-black">
             Viimeisimmät artikkelit
           </h3>
-          <ul className="pb-4 mb-4">
+          <ul>
             {heroPost && (
               <li className="article-link-list">
                 <Link href={`/blogi/${heroPost.slug}`}>
@@ -92,35 +92,6 @@ export default function HomePage({
                   </Link>
                 </li>
               ))}
-          </ul>
-          <h3 className="pb-4 mb-4 border-b-2 border-black">Linkkejä</h3>
-          <ul>
-            <li className="article-link-list">
-              <Link href="https://www.lappalaiskoirat.fi/">
-                Lappalaiskoirat ry
-              </Link>
-            </li>
-            <li className="article-link-list">
-              <Link href="https://www.lappalaiskoirat.fi/puhdas-lappalaiskoira/">
-                Puhdas lappalaiskoira -kampanja
-              </Link>
-            </li>
-            <li className="article-link-list">
-              <Link href="http://terveys.lappalaiskoiragalleria.org/">
-                Lappalaiskoiratietokanta
-              </Link>
-            </li>
-            <li className="article-link-list">
-              <Link href="https://jalostus.kennelliitto.fi/">
-                Jalostustietojärjestelmä
-              </Link>
-            </li>
-            <li className="article-link-list">
-              <Link href="https://www.kennelliitto.fi/">Kennelliitto</Link>
-            </li>
-            <li className="article-link-list">
-              <Link href="https://www.hankikoira.fi/">Hankikoira.fi</Link>
-            </li>
           </ul>
         </div>
       }
