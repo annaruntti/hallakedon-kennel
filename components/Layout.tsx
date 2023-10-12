@@ -45,6 +45,7 @@ export default function Layout({
       <Head>
         <title>{headTitle}</title>
         {heroImage && <meta property="og:image" content={heroImage.url} />}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <header className="relative" style={headerStyle}>
         <Navigation menuItems={menuItems} />
