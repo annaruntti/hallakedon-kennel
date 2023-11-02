@@ -51,7 +51,7 @@ const Heading = ({
 const Paragraph = ({ children }: { children: ReactNode }) => <p>{children}</p>;
 
 const UnorderedList = ({ children }: { children: ReactNode }) => (
-  <ul className="list-disc">{children}</ul>
+  <ul className="list-disc pl-4">{children}</ul>
 );
 
 const OrderedList = ({ children }: { children: ReactNode }) => (
