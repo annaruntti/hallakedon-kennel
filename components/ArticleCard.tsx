@@ -13,7 +13,7 @@ export default function ArticleCard({ blogPost }: Props) {
   return (
     <div>
       <Link href={postUrl} aria-label={blogPost.title}>
-        <article className="pb-4">
+        <article className="pb-4 pt-2">
           <div className="flex-none lg:flex flex-row gap-4">
             <div className="basis-1/4">
               {blogPost.heroImage && (
