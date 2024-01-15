@@ -2,6 +2,8 @@
 
 ## Running local development environment
 
+Copy .env.local.example and rename it to: .env.local and then add API keys from Contentful.
+
 ```bash
 npm run dev
 ```
