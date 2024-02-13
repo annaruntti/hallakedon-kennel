@@ -142,6 +142,7 @@ export default function Navigation({ menuItems }: Props) {
             className="inline w-10 mr-4"
             src={`${process.env.BASE_URL}/logo.png`}
           />
+          <span>Hallakedon kennel</span>
         </Link>
         <button className="inline-flex ml-auto" onClick={toggleMenu}>
           <Bars3Icon className="pt-2 h-8 w-8 mr-2" />
