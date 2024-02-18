@@ -57,7 +57,7 @@ export default function BlogPage({
           </ul>
           <ul className="flex flex-wrap items-center justify-center">
             {pageNumbers.map((pageNumber) => (
-              <li className="m-2">
+              <li className="m-2" key={pageNumber}>
                 <Link href={`/blogi/sivu/${pageNumber}`}>{pageNumber}</Link>
               </li>
             ))}
