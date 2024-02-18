@@ -7,9 +7,10 @@ import { MenuItem, pagesToMenuItems } from "../../components/Navigation";
 import {
   BlogPost,
   getBlogPost,
-  getBlogPosts,
+  getBlogPostCollection,
   getBlogPostSlugs,
   getPages,
+  BlogPostCollection,
 } from "../../utils/api";
 import { renderRichText } from "../../utils/richText";
 import { formatDate } from "../../utils/date";
@@ -17,7 +18,7 @@ import { formatDate } from "../../utils/date";
 interface Props {
   preview: boolean;
   blogPost: BlogPost;
-  blogPosts: BlogPost[];
+  blogPostCollection: BlogPostCollection;
   menuItems: MenuItem[];
 }
 
@@ -25,7 +26,7 @@ export default function BlogPostPage({
   preview,
   blogPost,
   menuItems,
-  blogPosts,
+  blogPostCollection,
 }: Props) {
   const router = useRouter();
 
@@ -33,13 +34,13 @@ export default function BlogPostPage({
   if (
     blogPost === undefined ||
     menuItems === undefined ||
-    blogPosts === undefined
+    blogPostCollection === undefined
   ) {
     return null;
   }
 
-  const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
-  const morePosts = blogPosts.length > 1 ? blogPosts.slice(1) : undefined;
+  const heroPost = blogPostCollection.blogPosts.length > 0 ? blogPostCollection.blogPosts[0] : undefined;
+  const morePosts = blogPostCollection.blogPosts.length > 1 ? blogPostCollection.blogPosts.slice(1) : undefined;
 
   if (!router.isFallback && !blogPost) {
     return <ErrorPage statusCode={404} />;
@@ -122,7 +123,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 
   const blogPost = await getBlogPost(params.slug, preview);
   const pages = await getPages(preview);
-  const blogPosts = await getBlogPosts(4, preview);
+  const blogPostCollection = await getBlogPostCollection(4, preview);
   const menuItems = pagesToMenuItems(pages);
 
   return {
@@ -130,7 +131,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       preview,
       blogPost,
       menuItems,
-      blogPosts,
+      blogPostCollection,
     },
   };
 };

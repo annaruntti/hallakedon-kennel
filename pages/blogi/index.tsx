@@ -5,7 +5,8 @@ import Layout from "../../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../../components/Navigation";
 import {
   BlogPost,
-  getBlogPosts,
+  BlogPostCollection,
+  getBlogPostCollection,
   getPage,
   getPages,
   Page,
@@ -15,18 +16,21 @@ import { formatDate } from "../../utils/date";
 interface Props {
   preview: boolean;
   blogPage: Page;
-  blogPosts: BlogPost[];
   menuItems: MenuItem[];
+  blogPostCollection: BlogPostCollection;
 }
 
 export default function BlogPage({
   preview,
   blogPage,
-  blogPosts,
+  blogPostCollection,
   menuItems,
 }: Props) {
-  const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
-  const morePosts = blogPosts.slice(1);
+  const heroPost = blogPostCollection.blogPosts.length > 0 ? blogPostCollection.blogPosts[0] : undefined;
+  const morePosts = blogPostCollection.blogPosts.slice(1);
+
+  const blogPostsMetaData = blogPostCollection.metaData;
+  console.log("blogPostsMetaData", blogPostsMetaData);
 
   return (
     <Layout
@@ -106,11 +110,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   preview = false,
 }) => {
   const blogPage = await getPage("blogi", preview);
-  const blogPosts = await getBlogPosts(4, preview);
+  const blogPostCollection = await getBlogPostCollection(4, preview);
   const pages = await getPages(preview);
   const menuItems = pagesToMenuItems(pages);
 
   return {
-    props: { preview, blogPage, blogPosts, menuItems },
+    props: { preview, blogPage, blogPostCollection, menuItems },
   };
 };

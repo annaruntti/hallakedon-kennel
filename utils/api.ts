@@ -162,6 +162,17 @@ export interface BlogPost {
   // author: Entry | null;
 }
 
+export interface BlogPostMetaData {
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+export interface BlogPostCollection {
+  blogPosts: BlogPost[];
+  metaData: BlogPostMetaData;
+}
+
 const BLOG_POST_GRAPHQL_FIELDS = `
   title
   slug
@@ -185,6 +196,14 @@ function extractBlogPosts(fetchResponse: any) {
   return fetchResponse?.data?.blogPostCollection?.items as BlogPost[];
 }
 
+function extractBlogPostCollectionMetaData(fetchResponse: any) {
+  return {
+    total: fetchResponse?.data?.blogPostCollection?.total || 0,
+    skip: fetchResponse?.data?.blogPostCollection?.skip || 0,
+    limit: fetchResponse?.data?.blogPostCollection?.limit || 0,
+  } as BlogPostMetaData;
+}
+
 export async function getBlogPost(slug: string, preview?: boolean) {
   const entry = await fetchGraphQL(
     `query {
@@ -204,14 +223,18 @@ export async function getBlogPost(slug: string, preview?: boolean) {
   return extractBlogPost(entry);
 }
 
-export async function getBlogPosts(limit: number, preview?: boolean) {
-  const entries = await fetchGraphQL(
+export async function getBlogPostCollection(
+  limit: number,
+  preview?: boolean
+): Promise<BlogPostCollection> {
+  const data = await fetchGraphQL(
     `query {
       blogPostCollection(
         order: date_DESC,
         limit: ${limit},
         preview: ${preview ? "true" : "false"}
       ) {
+        total
         items {
           ${BLOG_POST_GRAPHQL_FIELDS}
         }
@@ -220,7 +243,13 @@ export async function getBlogPosts(limit: number, preview?: boolean) {
     preview
   );
 
-  return extractBlogPosts(entries);
+  const blogPosts = extractBlogPosts(data);
+  const metaData = extractBlogPostCollectionMetaData(data);
+
+  return {
+    blogPosts,
+    metaData,
+  };
 }
 
 export async function getBlogPostSlugs(preview?: boolean) {

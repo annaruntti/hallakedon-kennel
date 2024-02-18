@@ -3,25 +3,25 @@ import Link from "next/link";
 import ArticleCard from "../components/ArticleCard";
 import Layout from "../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../components/Navigation";
-import { BlogPost, getBlogPosts, getPage, getPages, Page } from "../utils/api";
+import { getBlogPostCollection, BlogPostCollection, getPage, getPages, Page } from "../utils/api";
 import { renderRichText } from "../utils/richText";
 import { formatDate } from "../utils/date";
 
 interface Props {
   preview: boolean;
   homePage: Page;
-  blogPosts: BlogPost[];
+  blogPostCollection: BlogPostCollection;
   menuItems: MenuItem[];
 }
 
 export default function HomePage({
   preview,
   homePage,
-  blogPosts,
+  blogPostCollection,
   menuItems,
 }: Props) {
-  const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
-  const morePosts = blogPosts.slice(1);
+  const heroPost = blogPostCollection.blogPosts.length > 0 ? blogPostCollection.blogPosts[0] : undefined;
+  const morePosts = blogPostCollection.blogPosts.slice(1);
 
   return (
     <Layout
@@ -105,11 +105,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   preview = false,
 }) => {
   const homePage = await getPage("etusivu", preview);
-  const blogPosts = await getBlogPosts(4, preview);
+  const blogPostCollection = await getBlogPostCollection(4, preview);
   const pages = await getPages(preview);
   const menuItems = pagesToMenuItems(pages);
 
   return {
-    props: { preview, homePage, blogPosts, menuItems },
+    props: { preview, homePage, blogPostCollection, menuItems },
   };
 };
