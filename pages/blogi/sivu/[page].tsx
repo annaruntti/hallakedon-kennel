@@ -1,8 +1,8 @@
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
-import ArticleCard from "../../components/ArticleCard";
-import Layout from "../../components/Layout";
-import { MenuItem, pagesToMenuItems } from "../../components/Navigation";
+import ArticleCard from "../../../components/ArticleCard";
+import Layout from "../../../components/Layout";
+import { MenuItem, pagesToMenuItems } from "../../../components/Navigation";
 import {
   BlogPostCollection,
   getBlogPostCollection,
@@ -10,11 +10,12 @@ import {
   getPages,
   getPaginatedBlogPostCollection,
   Page,
-} from "../../utils/api";
-import { formatDate } from "../../utils/date";
-import { Config } from "../../utils/config";
+} from "../../../utils/api";
+import { formatDate } from "../../../utils/date";
+import { Config } from "../../../utils/config";
 
 interface Props {
+  page: number;
   preview: boolean;
   blogPage: Page;
   menuItems: MenuItem[];
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default function BlogPage({
+  page,
   preview,
   blogPage,
   blogPostCollection,
@@ -46,7 +48,7 @@ export default function BlogPage({
       }
       mainContent={
         <div>
-          <h2 className="mb-6">Blogi</h2>
+          <h2 className="mb-6">Blogi - sivu {page}</h2>
           <ul>
             {paginatedBlogPostCollection.blogPosts.map((post, index) => (
               <li className="border-b-2 border-black mb-2" key={index}>
@@ -101,12 +103,14 @@ export default function BlogPage({
 }
 
 export const getStaticProps: GetStaticProps<Props> = async ({
+  params,
   preview = false,
 }) => {
+  const page = typeof params?.page === "string" ? parseInt(params?.page) : 1;
   const blogPage = await getPage("blogi", preview);
   const blogPostCollection = await getBlogPostCollection(4, preview);
   const paginatedBlogPostCollection = await getPaginatedBlogPostCollection(
-    1,
+    page,
     preview
   );
   const pages = await getPages(preview);
@@ -117,6 +121,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 
   return {
     props: {
+      page,
       preview,
       blogPage,
       blogPostCollection,
@@ -124,5 +129,19 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       menuItems,
       totalPages,
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const blogPostCollection = await getBlogPostCollection(1);
+  const totalPages = Math.ceil(
+    blogPostCollection.metaData.total / Config.pagination.pageSize
+  );
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  return {
+    paths: pageNumbers?.map((pageNumber) => `/blogi/sivu/${pageNumber}`) ?? [],
+    fallback: true,
   };
 };

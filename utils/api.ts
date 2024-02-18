@@ -1,4 +1,5 @@
 import { Document } from "@contentful/rich-text-types";
+import { Config } from "./config";
 
 export interface ContentWithLinks {
   json: Document;
@@ -158,6 +159,8 @@ export interface BlogPost {
   excerpt: ContentWithLinks | null;
   content: ContentWithLinks | null;
   heroImage: Asset | null;
+  category: [String];
+
   // imageGallery: Asset[] | null;
   // author: Entry | null;
 }
@@ -186,6 +189,7 @@ const BLOG_POST_GRAPHQL_FIELDS = `
   heroImage {
     ${ASSET_GRAPHQL_FIELDS}
   }
+  category
 `;
 
 function extractBlogPost(fetchResponse: any) {
@@ -232,6 +236,38 @@ export async function getBlogPostCollection(
       blogPostCollection(
         order: date_DESC,
         limit: ${limit},
+        preview: ${preview ? "true" : "false"}
+      ) {
+        total
+        items {
+          ${BLOG_POST_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+
+  const blogPosts = extractBlogPosts(data);
+  const metaData = extractBlogPostCollectionMetaData(data);
+
+  return {
+    blogPosts,
+    metaData,
+  };
+}
+
+export async function getPaginatedBlogPostCollection(
+  page: number,
+  preview?: boolean
+): Promise<BlogPostCollection> {
+  const skip = page === 1 ? 0 : (page - 1) * Config.pagination.pageSize;
+
+  const data = await fetchGraphQL(
+    `query {
+      blogPostCollection(
+        order: date_DESC,
+        limit: ${Config.pagination.pageSize},
+        skip: ${skip},
         preview: ${preview ? "true" : "false"}
       ) {
         total
