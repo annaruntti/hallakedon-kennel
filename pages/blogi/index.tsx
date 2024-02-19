@@ -13,6 +13,7 @@ import {
 } from "../../utils/api";
 import { formatDate } from "../../utils/date";
 import { Config } from "../../utils/config";
+import Pagination from "../../components/Pagination";
 
 interface Props {
   preview: boolean;
@@ -31,8 +32,6 @@ export default function BlogPage({
   menuItems,
   totalPages,
 }: Props) {
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-
   return (
     <Layout
       preview={preview}
@@ -50,18 +49,11 @@ export default function BlogPage({
           <ul>
             {paginatedBlogPostCollection.blogPosts.map((post, index) => (
               <li className="border-b-2 border-black mb-2" key={index}>
-                {/* <Link href={`/blogi/${post.slug}`}>{post.title}</Link> */}
                 <ArticleCard blogPost={post} />
               </li>
             ))}
           </ul>
-          <ul className="flex flex-wrap items-center justify-center">
-            {pageNumbers.map((pageNumber) => (
-              <li className="m-2" key={pageNumber}>
-                <Link href={`/blogi/sivu/${pageNumber}`}>{pageNumber}</Link>
-              </li>
-            ))}
-          </ul>
+          <Pagination totalPages={totalPages} />
         </div>
       }
       asideContent={

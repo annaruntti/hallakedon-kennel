@@ -3,6 +3,7 @@ import Link from "next/link";
 import ArticleCard from "../../../components/ArticleCard";
 import Layout from "../../../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../../../components/Navigation";
+import Pagination from "../../../components/Pagination";
 import {
   BlogPostCollection,
   getBlogPostCollection,
@@ -33,7 +34,7 @@ export default function BlogPage({
   menuItems,
   totalPages,
 }: Props) {
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  console.log("blogPage.title", blogPage.title);
 
   return (
     <Layout
@@ -57,13 +58,7 @@ export default function BlogPage({
               </li>
             ))}
           </ul>
-          <ul className="flex flex-wrap items-center justify-center">
-            {pageNumbers.map((pageNumber) => (
-              <li className="m-2" key={pageNumber}>
-                <Link href={`/blogi/sivu/${pageNumber}`}>{pageNumber}</Link>
-              </li>
-            ))}
-          </ul>
+          <Pagination totalPages={totalPages} />
         </div>
       }
       asideContent={
