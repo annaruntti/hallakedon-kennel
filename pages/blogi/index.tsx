@@ -22,6 +22,7 @@ interface Props {
   blogPostCollection: BlogPostCollection;
   paginatedBlogPostCollection: BlogPostCollection;
   totalPages: number;
+  currentPage: number;
 }
 
 export default function BlogPage({
@@ -31,6 +32,7 @@ export default function BlogPage({
   paginatedBlogPostCollection,
   menuItems,
   totalPages,
+  currentPage,
 }: Props) {
   return (
     <Layout
@@ -53,7 +55,7 @@ export default function BlogPage({
               </li>
             ))}
           </ul>
-          <Pagination totalPages={totalPages} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} />
         </div>
       }
       asideContent={
@@ -106,6 +108,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   const totalPages = Math.ceil(
     blogPostCollection.metaData.total / Config.pagination.pageSize
   );
+  const currentPage = 1;
 
   return {
     props: {
@@ -115,6 +118,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       paginatedBlogPostCollection,
       menuItems,
       totalPages,
+      currentPage,
     },
   };
 };

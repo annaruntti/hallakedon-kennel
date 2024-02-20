@@ -16,7 +16,7 @@ import { formatDate } from "../../../utils/date";
 import { Config } from "../../../utils/config";
 
 interface Props {
-  page: number;
+  currentPage: number;
   preview: boolean;
   blogPage: Page;
   menuItems: MenuItem[];
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export default function BlogPage({
-  page,
+  currentPage,
   preview,
   blogPage,
   blogPostCollection,
@@ -34,8 +34,6 @@ export default function BlogPage({
   menuItems,
   totalPages,
 }: Props) {
-  console.log("blogPage.title", blogPage.title);
-
   return (
     <Layout
       preview={preview}
@@ -49,16 +47,15 @@ export default function BlogPage({
       }
       mainContent={
         <div>
-          <h2 className="mb-6">Blogi - sivu {page}</h2>
+          <h2 className="mb-6">Blogi - sivu {currentPage}</h2>
           <ul>
             {paginatedBlogPostCollection.blogPosts.map((post, index) => (
               <li className="border-b-2 border-black mb-2" key={index}>
-                {/* <Link href={`/blogi/${post.slug}`}>{post.title}</Link> */}
                 <ArticleCard blogPost={post} />
               </li>
             ))}
           </ul>
-          <Pagination totalPages={totalPages} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} />
         </div>
       }
       asideContent={
@@ -101,11 +98,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   params,
   preview = false,
 }) => {
-  const page = typeof params?.page === "string" ? parseInt(params?.page) : 1;
+  const currentPage =
+    typeof params?.page === "string" ? parseInt(params?.page) : 1;
   const blogPage = await getPage("blogi", preview);
   const blogPostCollection = await getBlogPostCollection(4, preview);
   const paginatedBlogPostCollection = await getPaginatedBlogPostCollection(
-    page,
+    currentPage,
     preview
   );
   const pages = await getPages(preview);
@@ -116,7 +114,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 
   return {
     props: {
-      page,
+      currentPage,
       preview,
       blogPage,
       blogPostCollection,

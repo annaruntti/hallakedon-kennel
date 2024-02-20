@@ -39,8 +39,14 @@ export default function BlogPostPage({
     return null;
   }
 
-  const heroPost = blogPostCollection.blogPosts.length > 0 ? blogPostCollection.blogPosts[0] : undefined;
-  const morePosts = blogPostCollection.blogPosts.length > 1 ? blogPostCollection.blogPosts.slice(1) : undefined;
+  const heroPost =
+    blogPostCollection.blogPosts.length > 0
+      ? blogPostCollection.blogPosts[0]
+      : undefined;
+  const morePosts =
+    blogPostCollection.blogPosts.length > 1
+      ? blogPostCollection.blogPosts.slice(1)
+      : undefined;
 
   if (!router.isFallback && !blogPost) {
     return <ErrorPage statusCode={404} />;
