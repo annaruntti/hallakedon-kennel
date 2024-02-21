@@ -34,6 +34,11 @@ export default function BlogPage({
   menuItems,
   totalPages,
 }: Props) {
+  // TODO: Fix the problem and remove this workaround
+  if (blogPage === undefined) {
+    return null;
+  }
+
   return (
     <Layout
       preview={preview}
