@@ -45,7 +45,7 @@ const Heading = ({
   level: 1 | 2 | 3 | 4 | 5 | 6;
   children: ReactNode;
 }) => {
-  return createElement(`h${level}`, { className: "font-bold", children });
+  return createElement(`h${level}`, { className: "font-bold" }, children);
 };
 
 const Paragraph = ({ children }: { children: ReactNode }) => <p>{children}</p>;
