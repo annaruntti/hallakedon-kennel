@@ -43,7 +43,6 @@ export default function PagePage({
   const heroPost = blogPosts.length > 0 ? blogPosts[0] : undefined;
   const morePosts = blogPosts.slice(1);
 
-
   if (!router.isFallback && !page) {
     return <ErrorPage statusCode={404} />;
   }
@@ -104,7 +103,7 @@ export default function PagePage({
           <br />
           <span>Anna Tiala</span>
           <br />
-          <span>Aarnonkuja 25, 90940 Jääli</span>
+          <span>Jääli, Oulu</span>
           <br />
           <span>anruntti@gmail.com</span>
           <br />

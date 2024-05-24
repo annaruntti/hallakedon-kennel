@@ -84,7 +84,7 @@ export default function BlogPage({
           <br />
           <span>Anna Tiala</span>
           <br />
-          <span>Aarnonkuja 25, 90940 Jääli</span>
+          <span>Jääli, Oulu</span>
           <br />
           <span>anruntti@gmail.com</span>
           <br />

@@ -3,7 +3,13 @@ import Link from "next/link";
 import ArticleCard from "../components/ArticleCard";
 import Layout from "../components/Layout";
 import { MenuItem, pagesToMenuItems } from "../components/Navigation";
-import { getBlogPostCollection, BlogPostCollection, getPage, getPages, Page } from "../utils/api";
+import {
+  getBlogPostCollection,
+  BlogPostCollection,
+  getPage,
+  getPages,
+  Page,
+} from "../utils/api";
 import { renderRichText } from "../utils/richText";
 import { formatDate } from "../utils/date";
 
@@ -20,7 +26,10 @@ export default function HomePage({
   blogPostCollection,
   menuItems,
 }: Props) {
-  const heroPost = blogPostCollection.blogPosts.length > 0 ? blogPostCollection.blogPosts[0] : undefined;
+  const heroPost =
+    blogPostCollection.blogPosts.length > 0
+      ? blogPostCollection.blogPosts[0]
+      : undefined;
   const morePosts = blogPostCollection.blogPosts.slice(1);
 
   return (
@@ -45,13 +54,15 @@ export default function HomePage({
           <span className="mb-6">
             <b>Etusivu</b>
           </span>
-          <h3 className="pt-4 mb-4">
-            {homePage.title}
-          </h3>
+          <h3 className="pt-4 mb-4">{homePage.title}</h3>
           {homePage.ingress && (
             <div className="ingress">{renderRichText(homePage.ingress)}</div>
           )}
-          {homePage.content && <div className="pb-4 mb-4 border-b-2 border-black">{renderRichText(homePage.content)}</div>}
+          {homePage.content && (
+            <div className="pb-4 mb-4 border-b-2 border-black">
+              {renderRichText(homePage.content)}
+            </div>
+          )}
           <h3 className="mb-6">Käy lukemassa uusin blogipostaus:</h3>
           {heroPost && <ArticleCard blogPost={heroPost} />}
         </div>
@@ -92,7 +103,7 @@ export default function HomePage({
           <br />
           <span>Anna Tiala</span>
           <br />
-          <span>Aarnonkuja 25, 90940 Jääli</span>
+          <span>Jääli, Oulu</span>
           <br />
           <span>anruntti@gmail.com</span>
         </div>
