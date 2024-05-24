@@ -14,7 +14,7 @@
     "@contentful/rich-text-react-renderer": "^15.17.0",
     "@heroicons/react": "^2.0.18",
     "contentful": "^10.3.0",
-    "next": "^13.4.7",
+    "next": "^14.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -12,6 +12,7 @@ import {
 } from "../utils/api";
 import { renderRichText } from "../utils/richText";
 import { formatDate } from "../utils/date";
+import Footer from "../components/Footer";
 
 interface Props {
   preview: boolean;
@@ -95,19 +96,7 @@ export default function HomePage({
           </ul>
         </div>
       }
-      footerContent={
-        <div>
-          <b>
-            <span className="mb-4">Hallakedon kennel</span>
-          </b>
-          <br />
-          <span>Anna Tiala</span>
-          <br />
-          <span>Jääli, Oulu</span>
-          <br />
-          <span>anruntti@gmail.com</span>
-        </div>
-      }
+      footerContent={<Footer />}
     />
   );
 }

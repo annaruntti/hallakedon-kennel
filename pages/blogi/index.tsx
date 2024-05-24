@@ -14,6 +14,7 @@ import {
 import { formatDate } from "../../utils/date";
 import { Config } from "../../utils/config";
 import Pagination from "../../components/Pagination";
+import Footer from "../../components/Footer";
 
 interface Props {
   preview: boolean;
@@ -76,20 +77,7 @@ export default function BlogPage({
           </ul>
         </div>
       }
-      footerContent={
-        <div>
-          <b>
-            <span className="mb-4">Hallakedon kennel</span>
-          </b>
-          <br />
-          <span>Anna Tiala</span>
-          <br />
-          <span>Jääli, Oulu</span>
-          <br />
-          <span>anruntti@gmail.com</span>
-          <br />
-        </div>
-      }
+      footerContent={<Footer />}
     />
   );
 }
