@@ -3,11 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    loader: 'custom',
+    loader: "custom",
   },
   env: {
     BASE_URL: process.env.BASE_URL,
-  }
+  },
 };
 
 module.exports = nextConfig;

@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier -w '**/*.{ts,tsx,js,jsx,json,css,html,md}'"
+    "format": "prettier -w '**/*.{ts,tsx,js,jsx,json,css,html,md}'",
+    "build": "next build && next export"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^16.1.0",

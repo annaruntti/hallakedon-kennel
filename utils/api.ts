@@ -20,21 +20,21 @@ export interface ContentWithLinks {
 }
 
 const CONTENT_WITH_LINKS_FIELDS = `
-json
-links {
-  assets {
-    block {
-      sys {
-        id
+  json
+  links {
+    assets {
+      block {
+        sys {
+          id
+        }
+        url
+        title
+        width
+        height
+        description
       }
-      url
-      title
-      width
-      height
-      description
     }
   }
-}
 `;
 
 /* Assets */
