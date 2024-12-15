@@ -64,7 +64,7 @@ export default function HomePage({
               {renderRichText(homePage.content)}
             </div>
           )}
-          <h3 className="mb-6">Käy lukemassa uusin blogipostaus:</h3>
+          <h3 className="pt-2 mb-6">Käy lukemassa uusin blogipostaus:</h3>
           {heroPost && <ArticleCard blogPost={heroPost} />}
         </div>
       }
