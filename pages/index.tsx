@@ -39,7 +39,7 @@ export default function HomePage({
       menuItems={menuItems}
       heroImage={homePage.heroImage}
       headerContent={
-        <div className="shadow-md header-title">
+        <div className="header-title">
           <h1>Hallakedon kennel</h1>
           <h2>Suomenlapinkoirien pienimuotoista kasvatusta Oulussa</h2>
           <p className="hidden md:block">

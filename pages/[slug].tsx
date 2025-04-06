@@ -55,7 +55,7 @@ export default function PagePage({
       title={page.title}
       heroImage={page.heroImage}
       headerContent={
-        <div className="shadow-md header-title">
+        <div className="header-title">
           <h1>{page.title}</h1>
         </div>
       }

@@ -47,7 +47,7 @@ export default function BlogPage({
       title={blogPage.title}
       heroImage={blogPage.heroImage}
       headerContent={
-        <div className="shadow-md header-title">
+        <div className="header-title">
           <h1>Hallakedon kennelin blogi</h1>
         </div>
       }

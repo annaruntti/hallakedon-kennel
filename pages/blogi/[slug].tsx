@@ -60,7 +60,7 @@ export default function BlogPostPage({
       title={blogPost.title}
       heroImage={blogPost.heroImage}
       headerContent={
-        <div className="shadow-md header-title">
+        <div className="header-title">
           <h1>{blogPost.title}</h1>
         </div>
       }
