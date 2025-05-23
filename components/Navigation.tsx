@@ -140,7 +140,7 @@ export default function Navigation({ menuItems }: Props) {
           <img
             alt="Kennelin logo"
             className="inline w-10 mr-4"
-            src={`${process.env.BASE_URL}/logo.png`}
+            src="/logo.png"
           />
           <span>Hallakedon kennel</span>
         </Link>
@@ -175,7 +175,7 @@ export default function Navigation({ menuItems }: Props) {
                 <img
                   alt="Kennelin logo"
                   className="inline w-10 mr-4"
-                  src={`${process.env.BASE_URL}/logo.png`}
+                  src="/logo.png"
                 />
                 Etusivu
               </span>
