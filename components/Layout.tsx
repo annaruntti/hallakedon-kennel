@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Script from "next/script";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import Link from "next/link";
@@ -50,6 +51,22 @@ export default function Layout({
           href={`${process.env.BASE_URL}/favicon.ico`}
           sizes="any"
         />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <Script id="google-analytics">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </Head>
       <header className="relative" style={headerStyle}>
         <Navigation menuItems={menuItems} />
