@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Page } from "../utils/api";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
@@ -18,6 +18,19 @@ interface Props {
   openSubMenu?: Boolean;
 }
 
+function submenuInstances(menuItemKey: string) {
+  return document.querySelectorAll<HTMLElement>(
+    `[data-submenu-key="${CSS.escape(menuItemKey)}"]`
+  );
+}
+
+function isInsideSubmenu(menuItemKey: string, target: Node | null) {
+  if (!target) return false;
+  return Array.from(submenuInstances(menuItemKey)).some((el) =>
+    el.contains(target)
+  );
+}
+
 function SubmenuContainer({
   menuItemKey,
   isOpen,
@@ -31,13 +44,11 @@ function SubmenuContainer({
   className?: string;
   children: React.ReactNode;
 }) {
-  const ref = useRef<HTMLLIElement>(null);
-
   useEffect(() => {
     if (!isOpen) return;
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      if (!isInsideSubmenu(menuItemKey, event.target as Node)) {
         onClose(menuItemKey);
       }
     };
@@ -54,14 +65,18 @@ function SubmenuContainer({
     requestAnimationFrame(() => {
       const active = document.activeElement;
       if (!active || active === document.body) return;
-      if (ref.current && !ref.current.contains(active)) {
+      if (!isInsideSubmenu(menuItemKey, active)) {
         onClose(menuItemKey);
       }
     });
   };
 
   return (
-    <li ref={ref} className={className} onBlur={handleBlur}>
+    <li
+      data-submenu-key={menuItemKey}
+      className={className}
+      onBlur={handleBlur}
+    >
       {children}
     </li>
   );
