@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Page } from "../utils/api";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
@@ -15,6 +16,55 @@ export interface MenuItem {
 interface Props {
   menuItems: MenuItem[];
   openSubMenu?: Boolean;
+}
+
+function SubmenuContainer({
+  menuItemKey,
+  isOpen,
+  onClose,
+  className,
+  children,
+}: {
+  menuItemKey: string;
+  isOpen: boolean;
+  onClose: (menuItemKey: string) => void;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        onClose(menuItemKey);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [isOpen, menuItemKey, onClose]);
+
+  const handleBlur = () => {
+    if (!isOpen) return;
+
+    requestAnimationFrame(() => {
+      const active = document.activeElement;
+      if (!active || active === document.body) return;
+      if (ref.current && !ref.current.contains(active)) {
+        onClose(menuItemKey);
+      }
+    });
+  };
+
+  return (
+    <li ref={ref} className={className} onBlur={handleBlur}>
+      {children}
+    </li>
+  );
 }
 
 export function pagesToMenuItems(pages: Page[]): MenuItem[] {
@@ -41,94 +91,116 @@ export function pagesToMenuItems(pages: Page[]): MenuItem[] {
 }
 
 export default function Navigation({ menuItems }: Props) {
+  const router = useRouter();
   const [isMenunOpen, setIsMenuOpen] = useState(false);
   const [openMenuItems, setOpenMenuItems] = useState<string[]>([]);
 
+  useEffect(() => {
+    setOpenMenuItems([]);
+  }, [router.asPath]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenunOpen);
   const toggleMenuItem = (menuItem: string) =>
-    setOpenMenuItems(
+    setOpenMenuItems((openMenuItems) =>
       openMenuItems.includes(menuItem)
         ? openMenuItems.filter((item) => menuItem !== item)
         : [...openMenuItems, menuItem]
     );
+  const closeMenuItem = useCallback((menuItem: string) => {
+    setOpenMenuItems((openMenuItems) =>
+      openMenuItems.filter(
+        (item) => item !== menuItem && !item.startsWith(`${menuItem}-`)
+      )
+    );
+  }, []);
   const isMenuItemOpen = (menuItem: string) => openMenuItems.includes(menuItem);
 
-  const menuListItems =
+  const renderMenuListItems = () =>
     menuItems.length > 0 &&
     menuItems.map((itemLevel1, indexLevel1) => {
       const menuItemKey = `${indexLevel1}`;
       const isOpen = isMenuItemOpen(menuItemKey);
 
-      return (
-        <li key={indexLevel1}>
-          {itemLevel1.subItems.length > 0 ? (
-            <>
-              <button
-                className="inline-flex"
-                onClick={() => toggleMenuItem(menuItemKey)}
-              >
-                {itemLevel1.title}{" "}
-                {isOpen ? (
-                  <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                ) : (
-                  <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                )}
-              </button>
-              <ul className={isOpen ? "submenu-open-level1" : "submenu-close"}>
-                {itemLevel1.subItems.map((itemLevel2, indexLevel2) => {
-                  const menuItemKey = `${indexLevel1}-${indexLevel2}`;
-                  const isOpen = isMenuItemOpen(menuItemKey);
-
-                  return (
-                    <li className="mb-1 md:mb-2" key={indexLevel2}>
-                      {itemLevel2.subItems.length > 0 ? (
-                        <>
-                          <button
-                            className="inline-flex"
-                            onClick={() => toggleMenuItem(menuItemKey)}
-                          >
-                            {itemLevel2.title}
-                            {isOpen ? (
-                              <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
-                            ) : (
-                              <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
-                            )}
-                          </button>
-                          <ul
-                            className={
-                              isOpen ? "submenu-open-level2" : "submenu-close"
-                            }
-                          >
-                            {itemLevel2.subItems.map(
-                              (itemLevel3, indexLevel3) => (
-                                <li key={indexLevel3}>
-                                  <Link
-                                    href={`/${itemLevel3.slug}`}
-                                    onClick={toggleMenu}
-                                  >
-                                    {itemLevel3.title}
-                                  </Link>
-                                </li>
-                              )
-                            )}
-                          </ul>
-                        </>
-                      ) : (
-                        <Link href={`/${itemLevel2.slug}`} onClick={toggleMenu}>
-                          {itemLevel2.title}
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          ) : (
+      if (itemLevel1.subItems.length === 0) {
+        return (
+          <li key={indexLevel1}>
             <Link href={`/${itemLevel1.slug}`} onClick={toggleMenu}>
               {itemLevel1.title}
             </Link>
-          )}
-        </li>
+          </li>
+        );
+      }
+
+      return (
+        <SubmenuContainer
+          key={indexLevel1}
+          menuItemKey={menuItemKey}
+          isOpen={isOpen}
+          onClose={closeMenuItem}
+        >
+          <button
+            className="inline-flex"
+            onClick={() => toggleMenuItem(menuItemKey)}
+          >
+            {itemLevel1.title}{" "}
+            {isOpen ? (
+              <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+            ) : (
+              <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+            )}
+          </button>
+          <ul className={isOpen ? "submenu-open-level1" : "submenu-close"}>
+            {itemLevel1.subItems.map((itemLevel2, indexLevel2) => {
+              const nestedMenuItemKey = `${indexLevel1}-${indexLevel2}`;
+              const isNestedOpen = isMenuItemOpen(nestedMenuItemKey);
+
+              if (itemLevel2.subItems.length === 0) {
+                return (
+                  <li className="mb-1 md:mb-2" key={indexLevel2}>
+                    <Link href={`/${itemLevel2.slug}`} onClick={toggleMenu}>
+                      {itemLevel2.title}
+                    </Link>
+                  </li>
+                );
+              }
+
+              return (
+                <SubmenuContainer
+                  key={indexLevel2}
+                  menuItemKey={nestedMenuItemKey}
+                  isOpen={isNestedOpen}
+                  onClose={closeMenuItem}
+                  className="mb-1 md:mb-2"
+                >
+                  <button
+                    className="inline-flex"
+                    onClick={() => toggleMenuItem(nestedMenuItemKey)}
+                  >
+                    {itemLevel2.title}
+                    {isNestedOpen ? (
+                      <ChevronUpIcon className="h-4 w-4 pt-1 ml-2" />
+                    ) : (
+                      <ChevronDownIcon className="h-4 w-4 pt-1 ml-2" />
+                    )}
+                  </button>
+                  <ul
+                    className={
+                      isNestedOpen ? "submenu-open-level2" : "submenu-close"
+                    }
+                  >
+                    {itemLevel2.subItems.map((itemLevel3, indexLevel3) => (
+                      <li key={indexLevel3}>
+                        <Link href={`/${itemLevel3.slug}`} onClick={toggleMenu}>
+                          {itemLevel3.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </SubmenuContainer>
+              );
+            })}
+          </ul>
+        </SubmenuContainer>
       );
     });
 
@@ -161,7 +233,7 @@ export default function Navigation({ menuItems }: Props) {
                 Etusivu
               </Link>
             </li>
-            {menuListItems}
+            {renderMenuListItems()}
           </ul>
         </div>
       </div>
@@ -181,7 +253,7 @@ export default function Navigation({ menuItems }: Props) {
               </span>
             </Link>
           </li>
-          {menuListItems}
+          {renderMenuListItems()}
         </ul>
       </div>
       {/* Desktop menu ends */}
